@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>User Login: Financial Transactions System</title>
+      <title>User Login: VELOCIUM SYSTEM</title>
       <meta charset="UTF-8" />
       <link rel="icon" href="{{ asset('assets/img/logo.png')}}" type="image/x-icon" />
       <link rel="shortcut icon" href="{{ asset('assets/img/logo.png')}}" />

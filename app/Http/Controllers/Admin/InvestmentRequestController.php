@@ -33,31 +33,25 @@ class InvestmentRequestController extends Controller
 
         return view('Admin.investment.active', compact('Invest_req'));
     }
-    // public function reject($id)
-    // {
-    //     try {
-    //         // Find the investment request by ID
-    //         $investment = InvestmentHistory::with('user')->findOrFail($id);
-    //         dd($investment);
-    //         if ($investment->status == 3) {
-    //             return redirect()->back()->with('warning', 'This investment request has already been rejected.');
-    //         }
+    public function reject()
+    {
+        $Invest_req = InvestmentHistory::with('user')->where('status', 3)->get();
+        // dd($Invest_req);
 
-    //         $investment->status = 3; // Assuming 3 is the 'rejected' status
-    //         $investment->save();
+        return view('Admin.investment.reject', compact('Invest_req'));
+    }
 
-    //         return redirect()->back()->with('success', 'Investment request rejected successfully!');
-    //     } catch (\Exception $e) {
-    //         // Log the error if something goes wrong
-    //         Log::error('Error rejecting investment request', ['error' => $e->getMessage()]);
+    public function reject_request($id, Request $request)
+    {
+        // Find the investment by ID
+        $investment = InvestmentHistory::findOrFail($id);
+        // dd($investment);
+        // Update the investment status to 'rejected'
+        $investment->status = 3; // Adjust based on your status field
+        $investment->save();
 
-    //         // Redirect back with error message
-    //         return redirect()->back()->with('error', 'An error occurred while rejecting the investment request.');
-    //     }
-    // }
-
-
-
+        return redirect()->route('invest_req.index')->with('success', 'Investment rejected successfully.');
+    }
 
     /**
      * Show the form for creating a new resource.

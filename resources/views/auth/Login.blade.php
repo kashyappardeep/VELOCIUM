@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>User Login: Financial Transactions System</title>
+      <title>User Login: Velocium System</title>
       <meta charset="UTF-8" />
       <link rel="icon" href="{{ asset('assets/img/logo.png')}}" type="image/x-icon" />
       <link rel="shortcut icon" href="{{ asset('assets/img/logo.png')}}" />
@@ -26,7 +26,11 @@
                      <img src="{{ asset('assets/img/logo.png')}}" class="mobile-logo" style="height:90px;">
                      <span class="login100-form-title">User Login</span>
                      <p class="login-text">Please Enter your Username and Password to Sign in.</p>
-
+                     @if(session('error'))
+                     <div class="alert alert-danger">
+                         {{ session('error') }}
+                     </div>
+                 @endif
                      <!-- Username input field -->
                      <div class="wrap-input100 validate-input">
                         <input name="email" value="{{ old('email') }}" type="text" class="input100" placeholder="Username" value="{{ old('loginId') }}" />
@@ -50,8 +54,8 @@
                      </div>
                      <!-- Error message for password -->
                      @error('password')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                     @enderror
+            <div class="alert alert-danger">{{ $message }}</div>
+        @enderror
 
                      <!-- Submit button -->
                      <div class="container-login100-form-btn">
