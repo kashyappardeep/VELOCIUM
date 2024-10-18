@@ -31,7 +31,7 @@
             <div class="row">
                <div class="col-lg-6 col-md-12 col-sm-12 login_bg">
                   <div class="side_logo swingimage">
-                     <img src="{{ asset('assets/img/logo.png')}}">
+                     <img src="{{ asset('assets/img/logo.png')}}" style="width:150px;">
                   </div>
                </div>
                <div class="col-lg-6 col-md-12 col-sm-12 login-right-bg">
@@ -58,7 +58,7 @@
 									 <div class="col-sm-6">
 										<div class="ctrl">
 										   <label>Sponsor ID: *</label>
-										   <input type="text" name="referal_by" value="{{ old('referal_by') }}" class="form-control " maxlength="50" value />
+										   <input type="text" id="sponsor" name="referal_by" value="{{ old('referal_by') }}" class="form-control " maxlength="50" value />
                                  @error('referal_by')
                                  <div class="text-danger">{{ $message }}</div>  <!-- Display validation error for name -->
                               @enderror
@@ -199,3 +199,20 @@
       {{-- <script src="{{ asset('assets/js/custom.js?version=08112022') }}"></script> --}}
    </body>
 </html>
+<script>
+   // Function to get URL parameter value
+function getUrlParameter(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+// Autofill the sponsor input field
+document.addEventListener('DOMContentLoaded', function() {
+    const referralCode = getUrlParameter('referral');
+    if (referralCode) {
+        const sponsorInput = document.getElementById('sponsor');
+        sponsorInput.value = referralCode; // Set the sponsor input to the referral code
+    }
+});
+
+   </script>

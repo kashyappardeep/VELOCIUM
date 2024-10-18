@@ -16,7 +16,7 @@
             <div class="row">
                <div class="col-lg-8 col-md-12 col-sm-12 login_bg">
                   <div class="side_logo">
-                     <img src="{{ asset('assets/img/logo.png')}}">
+                     <img src="{{ asset('assets/img/logo.png')}}" style="width: 150px;">
                   </div>
                </div>
                {{-- <div class="card-header">{{ __('Login') }}</div> --}}

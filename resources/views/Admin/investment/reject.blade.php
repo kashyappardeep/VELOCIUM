@@ -30,7 +30,6 @@
                                            {{-- <th  class="sorting" tabindex="0" aria-controls="tbldata"  style="width: 437.01px;" aria-label="Transaction ID: activate to sort column ascending">Transaction ID</th> --}}
                                            <th  style="width: 99.8542px;" data-column-index="2" class="sorting_disabled"  aria-label="Amount">Amount</th>
                                            <th  class="sorting_disabled"  style="width: 181.604px;" aria-label="Status">Status</th>
-                                           <th  class="sorting_disabled"  style="width: 181.604px;" aria-label="Status">Active / Reject</th>
                                            {{-- <th  class="sorting_disabled"  style="width: 181.604px;" aria-label="Status"></th> --}}
                                         </tr>
                                      </thead>
@@ -45,25 +44,12 @@
                                     @foreach($Invest_req as $Invest_req) 
                                     <tr class="odd">
                                         <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->user->name}}</td>
-                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->created_at}}</td>
-                                        <td style="width: 135px" data-column-index="2" class="sorting_disabled"  aria-label="Amount">{{$Invest_req->amount}}</td>
-                                        @IF($Invest_req->status == 1)
-                                        <td style="color : rgb(242, 233, 107)" class="sorting_disabled"   aria-label="Status">Pending...</td> 
+                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 235.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->created_at}}</td>
+                                        <td style="width: 237px" data-column-index="2" class="sorting_disabled"  aria-label="Amount">{{$Invest_req->amount}}</td>
+                                        @IF($Invest_req->status == 3)
+                                        <td style="color : rgb(245, 17, 17)" class="sorting_disabled"   aria-label="Status">Reject</td> 
                                         @endif
-                                        <td class="sorting_disabled" style="width: 276.604px;" aria-label="Status">
-                                            <!-- Form to trigger the PUT request -->
-                                            <form action="{{ route('invest_req.update', $Invest_req->id) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('PUT') <!-- Laravel's method spoofing to make this a PUT request -->
-                                                <button type="submit" class="btn btn-danger hvr-sweep-to-right">Activate</button>
-                                             </form>
-                                             {{-- <form action="{{ route('admin.reject', ['id' => $Invest_req->id]) }}" method="POST" style="display: inline;">
-                                                @csrf
-                                                @method('PUT')
-                                                <button type="submit" class="btn btn-danger hvr-sweep-to-right">Reject</button>
-                                            </form> --}}
-                                            
-                                        </td>
+                                        
                                         
                                        
 

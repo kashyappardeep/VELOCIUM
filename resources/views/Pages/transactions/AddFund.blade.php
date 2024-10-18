@@ -7,7 +7,7 @@
                 <div class="divPageTitle">
                    <h5>Add Fund</h5>
                    <div class="btnRight">
-                      <a id="btnView" href="DepositHistory.aspx" class="btn btn-danger hvr-sweep-to-right collapsed">
+                      <a id="btnView" href="{{route('DepositHistory')}}" class="btn btn-danger hvr-sweep-to-right collapsed">
                       <i class="fa fa-fw fa-circle-thin topicon"></i>View History
                       </a>
                    </div>

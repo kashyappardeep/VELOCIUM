@@ -1,7 +1,23 @@
 .hidediv {
     display: none;
 }
+.thwidth1{
+    width: 394.531px;
+}
+.thwidth2{
+    width: 195.8542px;
+}
 
+
+@media screen and (min-width: 769px) {
+    .thwidth1{
+        width: 276.531px;
+    }
+    .thwidth2{
+        width: 88.8542px;
+    }
+
+}
 .ultabs {
     display: block;
     float: left;

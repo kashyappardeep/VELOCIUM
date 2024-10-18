@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('referal_code')->unique();
             $table->string('referal_by');
             $table->integer('balance')->nullable();
+            $table->integer('team_business')->nullable();
             $table->string('gender')->nullable();
             $table->integer('status')->default(0)->comment("0=>inactive,1=>active");
             $table->string('password');

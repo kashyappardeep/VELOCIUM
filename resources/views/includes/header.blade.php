@@ -49,6 +49,8 @@
       <script src="MasterJs/MasterAPI.js?version=2"></script>
       <script src="assets/js/themejs.js?version=2"></script>
       <link href="assets/css/Dashboard.css?v=8" rel="stylesheet" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
       <script language="JavaScript" type="text/javascript">
          function CopyURL(id) {
              /* Get the text field */
@@ -237,15 +239,29 @@
                         {{-- <li><a href="ActivateDownlineID.aspx">Activate/Upgrade Downline ID</a> </li> --}}
                      </ul>
                   </li>
+                  {{-- <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed">
+                     <a><i class="fa fa-usd"></i>Royalty Rewards
+                     </a>
+                     <ul class="sub-menu collapse" >
+                        <li><a href="{{route('Royalty')}}">Rewards</a></li>
+                         </ul>
+                  </li> --}}
+                  <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed" aria-expanded="false">
+                     <a>
+                     <i class="fa fa-usd"></i>Royalty Rewards</a>
+                     <ul class="sub-menu collapse" id="TransactionSwap" style="">
+                     <li><a href="{{route('Royalty')}}">Rewards</a> </li>
+                      </ul>
+                     </li>
                   <li data-toggle="collapse" data-target="#Transaction" class="collapsed">
                      <a>
                      <i class="fa fa-file"></i>Transactions</a>
                      <ul class="sub-menu collapse" id="Transaction">
-                        <li><a href="{{route('addfund')}}">Add Fund</a> </li>
+                        {{-- <li><a href="{{route('addfund')}}">Add Fund</a> </li> --}}
                         <li><a href="{{route('WithdrawalRequest')}}">Claim My Earning</a> </li>
                         <li><a href="{{route('DepositHistory')}}">Deposit History</a> </li>
                         <li><a href="{{route('WithdrawalHistory')}}">Withdrawal History</a> </li>
-                        <li><a href="{{route('TransactionSummary')}}">Transaction Summary</a> </li>
+                        {{-- <li><a href="{{route('TransactionSummary')}}">Transaction Summary</a> </li> --}}
                      </ul>
                   </li>
                   {{-- <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed">
@@ -266,8 +282,8 @@
                      <ul class="sub-menu collapse" id="Report">
                         <li><a href="{{route('ReportROI')}}">ROI Income</a></li>
                         <li><a href="{{route('DirectIncome')}}">Direct Income</a></li>
-                        <li><a href="{{route('ReportSponsorLevelIncome')}}">Direct Level Income</a></li>
-                        <li><a href="{{route('ReportROILevelIncome')}}">Cashback Level Income</a></li>
+                        
+                        {{-- <li><a href="{{route('ReportROILevelIncome')}}">Cashback Level Income</a></li> --}}
                      </ul>
                   </li>
                   <li>
@@ -309,7 +325,7 @@
                   <span class="navbar-toggler-bar bar3"></span></button>
                </div>
                <a class="navbar-brand">VELOCIUM SYSTEM</a>
-               <div class="mobile-logo"><img src="images/logo-top.png" /> </div>
+               <div class="mobile-logo"><img src="assets/img/logo-top.png" width="50px" /> </div>
             </div>
 
             {{-- <div class="input-group no-border align-content-center mcoinrate" style="width: 30%;">

@@ -58,8 +58,8 @@ class UserController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'status' => "0",
-                'password' => Hash::make($request->password),
-                'referal_code' => "REF" . random_int(100000, 999999),
+                'password' => Hash::make($validated['password']),
+                'referal_code' => "VEL" . random_int(100000, 999999),
                 'referal_by' => $request->referal_by, // Save referral user ID if available
             ]);
             // dd($user);
@@ -80,25 +80,26 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        // Validate the incoming request data
+        // Validate incoming data
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
-        $user = User::where('email', $request->email)->first();
-        // Attempt to log in the user with the provided credentials
-        if ($user) {
-            Auth::login($user);
-            // if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed; redirect to the intended page or dashboard
-            return redirect()->route('dashboard');
+
+        // Define credentials
+        $credentials = $request->only('email', 'password');
+
+        // Check with the correct guard name (e.g., 'web' or 'users')
+        if (Auth::guard('web')->attempt($credentials)) {
+            // Redirect to dashboard if authentication succeeds
+            return redirect()->intended('dashboard');
         }
 
-        // Authentication failed; return back with an error message
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        // Redirect back with error if authentication fails
+        return redirect('/login')->with('error', 'Login credentials are not valid');
     }
+
+
 
 
     public function logout(Request $request)

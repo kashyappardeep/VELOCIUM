@@ -26,7 +26,8 @@ class User extends Authenticatable
         'referal_code',
         'referal_by',
         'gender',
-        'balance'
+        'balance',
+        'team_business'
     ];
 
     /**

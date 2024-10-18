@@ -62,7 +62,7 @@
                   </div>
                   <div class="row">
                      <div class="col-12 text-right">
-                        <a href="WithdrawalRequest.aspx" class="btn btn-warning">Claim My Earning</a>
+                        <a href="{{route('WithdrawalRequest')}}" class="btn btn-warning">Claim My Earning</a>
                      </div>
                   </div>
                   <div class="row">
@@ -72,7 +72,7 @@
                               <div class="divPageTitle">
                                  <h5 style="padding-top: 0px;">My Wallet Details</h5>
                                  <div class="btnRight">
-                                    <a  href="#" class="btn btn-success hvr-sweep-to-right collapsed" style="margin-left: 10px;">
+                                    <a  href="{{route('Activate.index')}}" class="btn btn-success hvr-sweep-to-right collapsed" style="margin-left: 10px;">
                                     <i class="fa fa-fw fa-circle-thin topicon"></i><span>Activate My ID</span>
                                     </a>
                                  </div>
@@ -89,7 +89,7 @@
                                  </div>
                                  <div class="col-6 col-md-6 taskrounbd">
                                     <div class="receipts">
-                                       <figure id="lblEWallet">0.00</figure>
+                                       <figure id="lblEWallet">{{$witdrowal}}</figure>
                                        <h2 style="text-transform: none;">Withdrawable Balance</h2>
                                     </div>
                                  </div>
@@ -106,23 +106,23 @@
                               <table class="tblJobOrderItem">
                                  <tr>
                                     <th class="tdjobid">USDT Stake</th>
-                                    <th style="width: 80px; text-align: right;" id="lblStaking">0.00</th>
+                                    <th style="width: 80px; text-align: right;" id="lblStaking">{{$total_investment}}</th>
                                  </tr>
                                  <tr>
                                     <th class="tdjobid">Daily Earning</th>
-                                    <th style="text-align: right;" id="lblDailyEarning">0.00</th>
+                                    <th style="text-align: right;" id="lblDailyEarning">{{$total_daily_roi}}</th>
                                  </tr>
                                  <tr>
                                     <th class="tdjobid">Earning Limit <span id="lblLimitPer" class="text-warning"></span></th>
-                                    <th style="text-align: right;" id="lblLimit">0.00</th>
+                                    <th style="text-align: right;" id="lblLimit">{{$max_day_roi}}</th>
                                  </tr>
                                  <tr>
                                     <th class="tdjobid">Received Earning <span id="lblEarningPer" class="text-warning" style="font-family: 'Segoe UI'"></span></th>
-                                    <th style="text-align: right;" id="lblEarning">0.00</th>
+                                    <th style="text-align: right;" id="lblEarning">{{$witdrowal}}</th>
                                  </tr>
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid">Balance Earning <span id="lblBalanceEarningPer" class="text-success" style="font-family: 'Segoe UI'"></span></th>
-                                    <th style="width: 100px; text-align: right;" id="lblBalanceEarning">0.00</th>
+                                    <th style="width: 100px; text-align: right;" id="lblBalanceEarning">{{$Balance_Earning}}</th>
                                  </tr>
                               </table>
                            </div>
@@ -202,28 +202,47 @@
                                  <tr>
                                     <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPROIIncome">0.00</i></span></td>
                                  </tr>
-                                 <tr>
-                                    <th style="width: 80px;" class="tdjobid">Direct Income</th>
-                                    <th style="width: 100px; text-align: right;" id="tdDirectIncome">0.00</th>
-                                 </tr>
-                                 <tr>
-                                    <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPDirectIncome">0.00</i></span></td>
-                                 </tr>
+                                 
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid"> Level Reward</th>
-                                    <th style="width: 100px; text-align: right;" id="tdSonsorLevelIncome">0.00</th>
+                                    <th style="width: 100px; text-align: right;" id="tdSonsorLevelIncome">{{$Directs_income}}</th>
                                  </tr>
                                  <tr>
                                     <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPSonsorLevelIncome">0.00</i></span></td>
                                  </tr>
                                  <tr>
-                                    <th style="width: 80px;" class="tdjobid">Royalty
-                                       Rewards</th>
-                                    <th style="width: 100px; text-align: right;" id="tdROILevelIncome">0.00</th>
+                                    <th style="width: 80px;" class="tdjobid">Royalty Rewards</th>
+                                    <th style="width: 100px; text-align: right;" id="tdROILevelIncome">{{$comp_reward}}</th>
                                  </tr>
                                  <tr>
-                                    <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPROILevelIncome">0.00</i></span></td>
+                                    <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPROILevelIncome">{{$pending_reward}}</i></span></td>
                                  </tr>
+                              </br>
+                             
+                              @if ($user_reward->count() > 0)
+                              
+                                  <tr>
+                                    <td colspan="2" class="tdWIPDtl">
+                                       @foreach ($user_reward as $reward)
+                                       <span class="wipqty"> 
+                                          <form action="{{ route('claim.reward', $reward->id) }}" method="POST">
+                                              @csrf
+                                              <button type="submit" class="btn btn-warning">
+                                                  Claim Rewards
+                                              </button>
+                                          </form>
+                                      </span>
+                                          @endforeach
+                                      </td>
+                                     </tr>
+                             
+                          @else
+                              <tr>
+                                  <td colspan="2" class="tdWIPDtl">No rewards available</td>
+                              </tr>
+                          @endif
+                          
+                                 </div>
                               </table>
                            </div>
                         </div>
@@ -235,7 +254,7 @@
                                  <div class="card-header ">
                                     <h5 class="card-title">My Business Detail</h5>
                                  </div>
-                                 <div class="card-body " style="height: 130px; overflow: auto">
+                                 <div class="card-body " style="height: 180px; overflow: auto">
                                     <table class="tblJobOrderItem tblBusinessDetail">
                                        <tr>
                                           <td style="width: 80px;" class="tdjobid"><i class="fa fa-shopping-cart"></i>&nbsp;My Package</td>
@@ -255,15 +274,23 @@
                                           <td style="width: 100px; text-align: right;" id="tdTotalTeamPV">0</td>
                                        </tr>
                                        <tr>
+                                          <td style="width: 80px;" class="tdjobid"><i class="fa fa-angellist"></i>&nbsp;Power Leg Team</td>
+                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamPV">{{$power_leg_business}}</td>
+                                       </tr>
+                                       <tr>
+                                          <td style="width: 80px;" class="tdjobid"><i class="fa fa-angellist"></i>&nbsp;Other Leg Team</td>
+                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamPV">{{$other_team_business}}</td>
+                                       </tr>
+                                       <tr>
                                           <td style="width: 80px;" class="tdjobid"><i class="fa fa-angellist"></i>&nbsp;Total Team Business</td>
-                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamBusiness">0</td>
+                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamBusiness">{{$total_business}}</td>
                                        </tr>
                                     </table>
                                  </div>
                               </div>
                            </div>
                         </div>
-                        <div class="row">
+                        {{-- <div class="row">
                            <div class="col-md-12">
                               <div class="card " style="margin-top: 10px;">
                                  <div class="card-header ">
@@ -274,10 +301,10 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> --}}
                      </div>
                   </div>
-                  <div class="row">
+                  {{-- <div class="row">
                      <div class="col-md-12">
                         <div class="card " style="margin-top: 10px;">
                            <div class="card-header ">
@@ -288,7 +315,7 @@
                            </div>
                         </div>
                      </div>
-                  </div>
+                  </div> --}}
                   <script src="assets/js/plugins/chartjs.min.js"></script>
                   <script src="UserJs/Dashboard/Dashboard.js?version=2"></script>
                </div>

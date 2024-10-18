@@ -15,11 +15,14 @@ class Rewards_Seeder extends Seeder
     {
         DB::table('rewards')->insert([
             [
+                'name' => 'Rewards 1',
                 'r_name' => 'R_1',
                 'team_business' => '10000',
                 'reward' => '200',
             ],
+
             [
+                'name' => 'Rewards 1',
                 'r_name' => 'R_2',
                 'team_business' => '25000',
                 'reward' => '500',

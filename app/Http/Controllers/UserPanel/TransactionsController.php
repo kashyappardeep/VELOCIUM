@@ -32,7 +32,6 @@ class TransactionsController extends Controller
     {
         $histroy = TransactionHistory::where('user_id', auth()->id())
             ->where('type', 1)->get();
-        // dd($histroy);
         return view('Pages.transactions.WithdrawalHistory', compact('histroy'));
     }
     public function withdraw(Request $request)

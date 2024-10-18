@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('rewards', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->string('r_name');
             $table->integer('team_business');
             $table->string('reward');

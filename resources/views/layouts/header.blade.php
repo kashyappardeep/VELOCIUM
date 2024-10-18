@@ -2,7 +2,7 @@
 <html>
    <head>
       <title>
-         Financial Transaction System
+         VELOCIUM SYSTEM
       </title>
       <meta charset="utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -173,7 +173,7 @@
       <div class="modal-dialog modal-sm divpopup" id="divNotification" style="width: 500px; display: none;">
          <div class="modal-content">
             <div class="modal-header">
-               <h4 class="modal-title">Message From Financial Transactions System</h4>
+               <h4 class="modal-title">Message From VELOCIUM SYSTEM</h4>
                <button type="button" class="close" onclick="closediv();"><span aria-hidden="true">×</span></button>
             </div>
             <div class="divpopup-inner">
@@ -216,8 +216,8 @@
                      <a><i class="fa fa-vcard"></i>Investment Request</a>
                      <ul class="sub-menu collapse" id="Profile">
                         <li><a href="{{route('invest_req.index')}}">Pending</a> </li>
-                        <li><a href="#">Active</a> </li>
-                        <li><a href="#">Reject</a> </li>
+                        <li><a href="{{route('admin.active')}}">Active</a> </li>
+                        {{-- <li><a href="{{route('admin.reject')}}">Reject</a> </li> --}}
                      </ul>
                   </li>
                   {{-- <li data-toggle="collapse" data-target="#Network" class="collapsed">
@@ -309,7 +309,7 @@
                   <span class="navbar-toggler-bar bar3"></span></button>
                </div>
                <a class="navbar-brand">Financial Transaction System</a>
-               <div class="mobile-logo"><img src="images/logo-top.png" /> </div>
+               <div class="mobile-logo"><img src="assets/img/logo-top.png" width="50px"/> </div>
             </div>
 
             <div class="input-group no-border align-content-center mcoinrate" style="width: 30%;">
@@ -340,3 +340,9 @@
                             {{ session('success') }}
                         </div>
                     @endif 
+                    @if (session('error'))
+                    {{-- <div class="alert alert-danger" id="success-alert"> --}}
+                     <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif

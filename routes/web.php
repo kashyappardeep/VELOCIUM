@@ -7,6 +7,7 @@ use App\Http\Controllers\UserPanel\ProfileController;
 use App\Http\Controllers\UserPanel\NetworkController;
 use App\Http\Controllers\UserPanel\ActivateController;
 use App\Http\Controllers\UserPanel\TransactionsController;
+use App\Http\Controllers\UserPanel\RoyaltyRewardsController;
 use App\Http\Controllers\UserPanel\IncomesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\InvestmentRequestController;
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/ReportROILevelIncome', [IncomesController::class, 'ReportROILevelIncome'])->name('ReportROILevelIncome');
     Route::post('/invest', [ActivateController::class, 'invest'])->name('invest');
     Route::post('/withdraw', [TransactionsController::class, 'withdraw'])->name('withdraw');
+    Route::get('/Royalty', [RoyaltyRewardsController::class, 'Royalty'])->name('Royalty');
+    Route::post('/claim-reward/{reward}', [RoyaltyRewardsController::class, 'claimReward'])->name('claim.reward');
 
 
     Route::get('/claimDaily', [ActivateController::class, 'claimDaily'])->name('claimDaily');
@@ -52,6 +55,11 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
     // Add other admin routes that require authentication
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/active', [InvestmentRequestController::class, 'active'])->name('admin.active');
+        // In routes/web.php
+        // In routes/web.php
+        // Route::put('/admin/reject/{id}', [InvestmentRequestController::class, 'reject'])->name('admin.reject');
+
         // Add more protected routes here
 
         Route::resource('invest_req', InvestmentRequestController::class);
