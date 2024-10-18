@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\InvestmentRequestController;
 
 // Public routes
+Route::get('/', [UserController::class, 'index']);
 Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
@@ -56,11 +57,8 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
     Route::middleware('auth:admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/active', [InvestmentRequestController::class, 'active'])->name('admin.active');
-        // In routes/web.php
-        // In routes/web.php
-        // Route::put('/admin/reject/{id}', [InvestmentRequestController::class, 'reject'])->name('admin.reject');
-
-        // Add more protected routes here
+        Route::get('/reject', [InvestmentRequestController::class, 'reject'])->name('admin.reject');
+        Route::post('/reject_request/{id}', [InvestmentRequestController::class, 'reject_request'])->name('reject_request');
 
         Route::resource('invest_req', InvestmentRequestController::class);
     });

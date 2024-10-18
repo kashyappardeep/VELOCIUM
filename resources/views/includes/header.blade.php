@@ -63,24 +63,7 @@
              OpenAlert("Link copied to clipboard");
          }
       </script>
-      <script type="text/javascript">
-         function claimDaily() {
-             $.ajax({
-                 url: "{{ route('claimDaily') }}", // Define the route here
-                 method: "GET",
-                 success: function(response) {
-                     
-                     // Handle the response as needed (e.g., update the UI)
-                 },
-                 error: function(error) {
-                     console.log(error);
-                 }
-             });
-         }
-     
-         // Call claimDaily() function every 5 seconds
-         setInterval(claimDaily, 50000); // 5000 milliseconds = 5 seconds
-     </script>
+    
      
       <style>
          .coin-marquee-header-signature, .coin-marquee-header {

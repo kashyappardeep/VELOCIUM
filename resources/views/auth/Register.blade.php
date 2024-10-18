@@ -2,7 +2,7 @@
 <html lang="en">
    <head>
       <title>
-         New Registration: Financial Transactions System
+         New Registration: Velocium System
       </title>
       <meta charset="UTF-8" />
       <link rel="icon" href="{{ asset('assets/img/logo.png')}}" type="image/x-icon" />

@@ -61,24 +61,7 @@
              OpenAlert("Link copied to clipboard");
          }
       </script>
-      <script type="text/javascript">
-         function claimDaily() {
-             $.ajax({
-                 url: "{{ route('claimDaily') }}", // Define the route here
-                 method: "GET",
-                 success: function(response) {
-                     
-                     // Handle the response as needed (e.g., update the UI)
-                 },
-                 error: function(error) {
-                     console.log(error);
-                 }
-             });
-         }
-     
-         // Call claimDaily() function every 5 seconds
-         setInterval(claimDaily, 50000); // 5000 milliseconds = 5 seconds
-     </script>
+      
      
       <style>
          .coin-marquee-header-signature, .coin-marquee-header {
@@ -217,7 +200,7 @@
                      <ul class="sub-menu collapse" id="Profile">
                         <li><a href="{{route('invest_req.index')}}">Pending</a> </li>
                         <li><a href="{{route('admin.active')}}">Active</a> </li>
-                        {{-- <li><a href="{{route('admin.reject')}}">Reject</a> </li> --}}
+                        <li><a href="{{route('admin.reject')}}">Reject</a> </li>
                      </ul>
                   </li>
                   {{-- <li data-toggle="collapse" data-target="#Network" class="collapsed">
@@ -308,7 +291,7 @@
                   <span class="navbar-toggler-bar bar2"></span>
                   <span class="navbar-toggler-bar bar3"></span></button>
                </div>
-               <a class="navbar-brand">Financial Transaction System</a>
+               <a class="navbar-brand">VELOCIUM SYSTEM</a>
                <div class="mobile-logo"><img src="assets/img/logo-top.png" width="50px"/> </div>
             </div>
 

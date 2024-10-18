@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Log;
 
 class UserController extends Controller
 {
+    public function index()
+    {
+        return view('index');
+    }
     public function showLoginForm()
     {
         return view('auth.Login');
@@ -50,7 +54,11 @@ class UserController extends Controller
         }
         try {
             DB::beginTransaction();
-
+            $password = Hash::make($validated['password']);
+            Log::info('genrate password ', ['hashed_password' => $password]);
+            Log::info('Entered password', ['entered_password' => $request->password]);
+            // echo $request->password;
+            // die;
             // Create the user
             $user = User::create([
                 'prefix' => $validated['prefix'],
@@ -58,12 +66,12 @@ class UserController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'status' => "0",
-                'password' => Hash::make($validated['password']),
+                'password' => $password,
                 'referal_code' => "VEL" . random_int(100000, 999999),
                 'referal_by' => $request->referal_by, // Save referral user ID if available
             ]);
             // dd($user);
-
+            Log::info('User password from DB', ['hashed_password' => $user->password]);
             DB::commit();
             // Log in the user after registration (optional)
             auth()->login($user);
@@ -80,7 +88,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        // Validate incoming data
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -89,15 +97,31 @@ class UserController extends Controller
         // Define credentials
         $credentials = $request->only('email', 'password');
 
-        // Check with the correct guard name (e.g., 'web' or 'users')
-        if (Auth::guard('web')->attempt($credentials)) {
-            // Redirect to dashboard if authentication succeeds
-            return redirect()->intended('dashboard');
+        // Check if the user exists
+        $user = User::where('email', $credentials['email'])->first();
+
+        // echo Hash::make(12341234);
+        //die;
+        if ($user) {
+            // echo Hash::check($credentials['password'], $user->password);
+            // die;
+            // Check if the entered password matches the hashed password
+            if (Hash::check($request->password, $user->password)) {
+
+                // Proceed with login
+                Auth::login($user);
+                return redirect()->intended('dashboard');
+            } else {
+                Log::info('Incorrect password for user', ['email' => $credentials['email']]);
+                return redirect('/login')->with('error', 'Password is incorrect');
+            }
         }
 
-        // Redirect back with error if authentication fails
+        // If the user is not found
+        Log::info('User not found', ['email' => $credentials['email']]);
         return redirect('/login')->with('error', 'Login credentials are not valid');
     }
+
 
 
 

@@ -38,14 +38,15 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'users', // Ensure this matches your provider name
         ],
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
         ],
-
     ],
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -65,23 +66,16 @@ return [
     */
 
     'providers' => [
-        // 'users' => [
-        //     'driver' => 'eloquent',
-        //     'model' => env('AUTH_MODEL', App\Models\User::class),
-        // ],
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class, // Replace this with your actual User model path
+            'model' => App\Models\User::class,
         ],
-        'admin' => [
+        'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin::class, // Change 'Admin' to your admin model class
-        ],
-        'users' => [
-            'driver' => 'database',
-            'table' => 'users',
+            'model' => App\Models\Admin::class, // Your Admin model
         ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------

@@ -7,7 +7,7 @@
           <div class="navbar-toggle">
              <button type="button" class="navbar-toggler"><span class="navbar-toggler-bar bar1"></span><span class="navbar-toggler-bar bar2"></span><span class="navbar-toggler-bar bar3"></span></button>
           </div>
-          <a class="navbar-brand">Financial Transaction System</a>
+          <a class="navbar-brand">VELOCIUM SYSTEM</a>
           <div class="mobile-logo"><img src="assets/img/logo.png" /> </div>
        </div>
        <div class="input-group no-border align-content-center mcoinrate" style="width: 30%;">

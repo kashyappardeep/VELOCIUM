@@ -6,7 +6,7 @@
 <!-- Mirrored from fts.in.net/User/ForgotPassword.aspx by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 04 Oct 2024 05:47:54 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head><title>
-	Forgot Password: Financial Transactions System
+	Forgot Password: VELOCIUM SYSTEM
 </title><meta charset="UTF-8" /><link rel="icon" href="https://fts.in.net/favicon.ico" type="image/x-icon" /><link rel="shortcut icon" href="https://fts.in.net/favicon.ico" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="stylesheet" href="logincss/bootstrap.min.css" /><link rel="stylesheet" href="logincss/font-awesome.min.css" /><link rel="stylesheet" href="logincss/login.css" /></head>
 <body>
 <div class="login_form">

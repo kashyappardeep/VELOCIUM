@@ -57,11 +57,11 @@
                                                 @method('PUT') <!-- Laravel's method spoofing to make this a PUT request -->
                                                 <button type="submit" class="btn btn-danger hvr-sweep-to-right">Activate</button>
                                              </form>
-                                             {{-- <form action="{{ route('admin.reject', ['id' => $Invest_req->id]) }}" method="POST" style="display: inline;">
+                                             <form action="{{ route('reject_request',$Invest_req->id) }}" method="POST" style="display: inline;">
                                                 @csrf
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-danger hvr-sweep-to-right">Reject</button>
-                                            </form> --}}
+                                            </form>
                                             
                                         </td>
                                         

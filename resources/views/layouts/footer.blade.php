@@ -4,7 +4,7 @@
           <div class="credits ml-auto">
              <span class="copyright">
                 ©....
-                , Powered By Financial Transactions System 
+                , Powered By VELOCIUM SYSTEM 
              </span>
           </div>
        </div>
