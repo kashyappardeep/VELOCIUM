@@ -12,7 +12,7 @@
       <title>
         VELOCIUM SYSTEM
       </title>
-      <link rel="apple-touch-icon" href="favicon.html" />
+      <link rel="apple-touch-icon" href="{{ route('login') }}" />
       <link href="assets/home/css/font-awesome.min.css" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="assets/home/css/bootstrap.min.css" />
       <link rel="stylesheet" type="text/css" href="assets/home/fonts/themify/style.min.css" />
@@ -41,7 +41,7 @@
       </style>
    </head>
    <body class=" 1-column undefined  page-animated svg-wrapper" data-menu-open="hover" data-menu>
-      <form method="post" action="https://fts.in.net/" id="form1">
+     
          <div class="aspNetHidden">
             <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="cLgF/OxW7puf1Bm3jPhb7F5DvkHSWTpOA8eSXD3tNDC05dlZw+bD886jKZU1p5qtCkaiJpHy9ZC+GfpmipDE3UPxdQPuCbYnblBQdtMlQRc=" />
          </div>
@@ -52,7 +52,7 @@
          <header class="page-header">
             <nav class="fixed-top main-menu mb-1 navbar navbar-dark navbar-expand-lg static-top">
                <div class="container">
-                  <a href="index.html" class="animated navbar-brand">
+                  <a href="/" class="animated navbar-brand">
                   <img alt="pitokennetwork" src="assets/home/images-3d-animation/logo-top3860.png?v=1" style="max-width:80px;" />
                   </a>
                   <button class="navbar-toggler" type="button" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" data-target="#navbarCollapse" data-toggle="collapse">
@@ -62,7 +62,7 @@
                      <div class="navbar-nav ml-auto" id="navigation">
                         <ul class="navbar-nav mt-1">
                            <li class="animated nav-item">
-                              <a href="index.html" class="nav-link">Home</a>
+                              <a href="" class="nav-link">Home</a>
                            </li>
                            <li class="animated nav-item">
                               <a href="#about" class="nav-link">About</a>
@@ -234,6 +234,6 @@
       <script src="assets/home/js/theme.js"></script>
       <script src="assets/home/js/scripts/demo.min.js"></script>
       <script src="assets/home/js/scripts/particles-type1.min.js"></script>
-      </form>
+     
    </body>
  </html>
