@@ -12,6 +12,9 @@
  </footer>
 </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
 <script src="{{ asset('assets/js/plugins/bootstrap-notify.js')}}"></>
 <script src="{{ asset('assets/js/paper-dashboard.min.js?v=2.0.0')}}" type="text/javascript"></script>
 <script>
@@ -28,3 +31,10 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $('#sidebarToggle').click(function() {
+            $('#sidebar').toggleClass('active'); // Add or remove 'active' class
+        });
+    });
+</script>

@@ -80,6 +80,9 @@
          border: none !important;
          margin-top: 10px;
          }
+         .sidebar.active {
+            margin-left: 258px;
+        }
       </style>
    </head>
    <body>
@@ -182,7 +185,7 @@
       <input type="hidden" name="ctl00$HidWebURL" id="HidWebURL" value="https://fts.in.net/" />
       <input type="hidden" name="ctl00$HidVersionNo" id="HidVersionNo" value="10082021" />
       <div class="wrapper ">
-      <div class="sidebar" data-color="white" data-active-color="danger">
+      <div class="sidebar" id="sidebar" data-color="white" data-active-color="danger">
          <div class="menu-bar">
             <div class="logo">
                <a href="{{ route('dashboard') }}" class>
@@ -219,16 +222,9 @@
                      <ul class="sub-menu collapse" id="Registration">
                         <li><a href="{{ route('register') }}">Add New Registration</a> </li>
                         <li><a href="{{route('Activate.index')}}">Activate/Upgrade My ID</a> </li>
-                        {{-- <li><a href="ActivateDownlineID.aspx">Activate/Upgrade Downline ID</a> </li> --}}
-                     </ul>
+                      </ul>
                   </li>
-                  {{-- <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed">
-                     <a><i class="fa fa-usd"></i>Royalty Rewards
-                     </a>
-                     <ul class="sub-menu collapse" >
-                        <li><a href="{{route('Royalty')}}">Rewards</a></li>
-                         </ul>
-                  </li> --}}
+                
                   <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed" aria-expanded="false">
                      <a>
                      <i class="fa fa-usd"></i>Royalty Rewards</a>
@@ -240,25 +236,12 @@
                      <a>
                      <i class="fa fa-file"></i>Transactions</a>
                      <ul class="sub-menu collapse" id="Transaction">
-                        {{-- <li><a href="{{route('addfund')}}">Add Fund</a> </li> --}}
                         <li><a href="{{route('WithdrawalRequest')}}">Claim My Earning</a> </li>
                         <li><a href="{{route('DepositHistory')}}">Deposit History</a> </li>
                         <li><a href="{{route('WithdrawalHistory')}}">Withdrawal History</a> </li>
-                        {{-- <li><a href="{{route('TransactionSummary')}}">Transaction Summary</a> </li> --}}
-                     </ul>
+                        </ul>
                   </li>
-                  {{-- <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed">
-                     <a>
-                     <i class="fa fa-exchange"></i>Transactions (Swap)</a>
-                     <ul class="sub-menu collapse" id="TransactionSwap">
-                        <li><a href="Swap.aspx">Swap Token</a> </li>
-                        <li><a href="DepositRequest.aspx?rectype=usdt">Add USDT</a> </li>
-                        <li><a href="DepositRequest.aspx">Add FTS </a></li>
-                        <li><a href="SwapWithdrawal.aspx"> New Swap Withdrawal</a> </li>
-                        <li><a href="TokenDepositHistory.aspx">Add Token History </a></li>
-                        <li><a href="SwapWithdrawalHistory.aspx">Withdrawal History</a> </li>
-                     </ul>
-                  </li> --}}
+                  
                   <li data-toggle="collapse" data-target="#Report" class="collapsed">
                      <a><i class="fa fa-usd">
                      </i>My Incomes</a>
@@ -266,18 +249,12 @@
                         <li><a href="{{route('ReportROI')}}">ROI Income</a></li>
                         <li><a href="{{route('DirectIncome')}}">Direct Income</a></li>
                         
-                        {{-- <li><a href="{{route('ReportROILevelIncome')}}">Cashback Level Income</a></li> --}}
-                     </ul>
+                      </ul>
                   </li>
                   <li>
-                     {{-- <form action="{{ route('logout') }}" method="POST">
-                     <a >
-                        <i class="fa fa-sign-out"></i>
-                        <p>Logout</p>
-                     </a>
-                  </form> --}}
+                     
                   <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                     @csrf <!-- Include CSRF token for security -->
+                     @csrf 
                      <a href="#"> 
                          
                      <button type="submit" style="background: none;
@@ -298,11 +275,9 @@
       <nav id="divnavbar" class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
          <div class="container-fluid">
             <div class="navbar-wrapper" style="width: 55%">
-               {{-- <div class="menuicon">
-                  <i class="nc-icon nc-minimal-right" aria-hidden="true"></i>
-               </div> --}}
+               
                <div class="navbar-toggle">
-                  <button type="button" class="navbar-toggler">
+                  <button type="button" class="navbar-toggler" id="sidebarToggle">
                   <span class="navbar-toggler-bar bar1"></span>
                   <span class="navbar-toggler-bar bar2"></span>
                   <span class="navbar-toggler-bar bar3"></span></button>
@@ -311,27 +286,6 @@
                <div class="mobile-logo"><img src="assets/img/logo-top.png" width="50px" /> </div>
             </div>
 
-            {{-- <div class="input-group no-border align-content-center mcoinrate" style="width: 30%;">
-               <span class="align-items-start rate text-success bold"><strong>FTS Rate: <span id="spanFSTCoinRate">0.00</span></strong>
-               </span>
-            </div>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-bar navbar-kebab"></span><span class="navbar-toggler-bar navbar-kebab"></span><span class="navbar-toggler-bar navbar-kebab"></span></button> --}}
-            {{-- <div class="collapse navbar-collapse justify-content-end" id="navigation" style="width: 15%;">
-               <div></div>
-               <ul class="navbar-nav">
-                  <li class="nav-item btn-rotate dropdown">
-                     <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user" style="float: left;"></i>
-                        <p>
-                           <span class=" d-md-block">{{$user_data->name}}<br/>
-                           <label title="My User ID">{{$user_data->referal_code}}</label>
-                           </span>
-                        </p>
-                     </a>
-                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink"><a class="dropdown-item" href="ChangePassword.aspx">Change Password</a> <a id="linkLogout" class="dropdown-item" href="Logout.aspx">Logout</a> </div>
-                  </li>
-               </ul>
-            </div> --}}
          </div>
       </nav>
       @if(session('success'))

@@ -38,7 +38,7 @@ class TransactionsController extends Controller
     {
         $user = User::where('id', auth()->id())->first();
         $amount = $request->usdt_amount;
-        if ($amount < 20) {
+        if ($amount <= 20) {
             // Redirect back with a success message
             return redirect()->back()->with('error', 'The minimum withdrawal amount is $20.');
         }
