@@ -324,18 +324,23 @@
 
               <script>
                function copyReferralLink() {
-                   // Get the referral link value
-                   var referralLink = document.getElementById("referralLink").value;
+                   // Get the input field
+                   var referralInput = document.getElementById("referralLink");
                    
-                   // Use the Clipboard API to copy the link
-                   navigator.clipboard.writeText(referralLink).then(function() {
-                       // Success message
-                       alert("Referral link copied to clipboard: " + referralLink);
-                   }).catch(function(error) {
-                       // Error message
-                       console.error("Copy failed", error);
-                       alert("Failed to copy the referral link.");
-                   });
+                   // Make the input field visible for selection (optional)
+                   referralInput.style.display = "block"; // Show for a moment
+                   referralInput.select();
+                   referralInput.setSelectionRange(0, 99999); // For mobile devices
+               
+                   // Copy the text inside the input field
+                   document.execCommand("copy");
+                   
+                   // Hide the input field again
+                   referralInput.style.display = "none"; // Hide again
+               
+                   // Optionally, show a message that the link was copied
+                   alert("Referral link copied: " + referralInput.value);
                }
                </script>
+               
                
