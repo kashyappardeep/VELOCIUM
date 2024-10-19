@@ -86,9 +86,11 @@
     visibility: visible; /* Ensure it's visible */
 }
          .main-panel {
+            display: none;
              transition: margin-left 0.3s; /* Smooth transition for main content */
              margin-left: 0; /* Default margin */
          }
+
          .main-panel.active {
              margin-left: 250px; /* Shift main content when sidebar is open */
          }
@@ -253,40 +255,7 @@
                <a class="navbar-brand">VELOCIUM SYSTEM</a>
            </div>
            <div class="collapse navbar-collapse justify-content-end" id="navigation">
-            <div class="menu-bar">
-       <div class="logo">
-           <a href="{{ route('admin.dashboard') }}">
-               <img src="{{ asset('assets/img/logo.png') }}" alt style="max-width: 90%; width: 112px">
-           </a>
-       </div>
-       <div class="sidebar-wrapper">
-           <ul class="nav" id="sidebar">
-               <li>
-                   <a href="{{ route('admin.dashboard') }}">
-                       <i class="fa fa-home"></i>
-                       <p>Dashboard</p>
-                   </a>
-               </li>
-               <li data-toggle="collapse" data-target="#Profile" class="collapsed">
-                   <a><i class="fa fa-vcard"></i>Investment Request</a>
-                   <ul class="sub-menu collapse" id="Profile">
-                       <li><a href="{{ route('invest_req.index') }}">Pending</a></li>
-                       <li><a href="{{ route('admin.active') }}">Active</a></li>
-                       <li><a href="{{ route('admin.reject') }}">Reject</a></li>
-                   </ul>
-               </li>
-               <li>
-                   <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                       @csrf
-                       <button type="submit" style="background: none; display: flex; color: #25e487; border: none;">
-                           <i class="fa fa-sign-out"></i>
-                           <p>Logout</p>
-                       </button>
-                   </form>
-               </li>
-           </ul>
-       </div>
-   </div>
+    
            </div>
        </div>
    </nav>
