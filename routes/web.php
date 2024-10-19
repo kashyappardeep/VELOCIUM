@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPanel\DashboardController;
@@ -49,8 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('Activate', ActivateController::class);
 });
 Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function () {
-    Route::get('login', [AdminController::class, 'showLoginForm']);
-    Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    Route::get('login', [AdminController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [AdminController::class, 'login']);
 
     // Add other admin routes that require authentication
     Route::middleware('auth:admin')->group(function () {
