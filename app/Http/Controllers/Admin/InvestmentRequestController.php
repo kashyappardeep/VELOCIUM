@@ -93,13 +93,7 @@ class InvestmentRequestController extends Controller
 
         try {
             // Fetch the investment history
-            $user_invest = InvestmentHistory::where('id', $id)->first();
-
-            // Check if investment history exists
-            if (!$user_invest) {
-                Log::error('Investment history not found', ['id' => $id]);
-                return redirect()->back()->with('error', 'Investment history not found.');
-            }
+            $user_invest = InvestmentHistory::findOrFail($id);
 
             // Fetch the user associated with the investment
             $currentUser = User::findOrFail($user_invest->user_id);
@@ -107,27 +101,26 @@ class InvestmentRequestController extends Controller
             $rewards = Reward::all();
             Log::info('Initial user data:', ['currentUser' => $currentUser->toArray()]);
 
-            // Loop through levels to calculate bonuses
 
+
+            // Loop through levels to calculate bonuses
             foreach ($levels as $level) {
-                $referrer_count = User::where('referal_code', $currentUser->referal_by)
+
+                $referrer_count = User::where('referal_by', $currentUser->referal_by)
                     ->where('status', 2)
                     ->count();
+
                 Log::info('Checking direct referrals', [
                     'level_direct' => $level->direct,
                     'referrer_count' => $referrer_count,
                 ]);
+
                 if ($level->direct <= $referrer_count) {
-
-
                     if ($currentUser && $currentUser->referal_by) {
                         // Find the referrer
-
                         $referrer = User::where('referal_code', $currentUser->referal_by)
                             ->where('status', 2)
                             ->first();
-
-
 
                         // Check if the referrer exists
                         if (!$referrer) {
@@ -146,31 +139,24 @@ class InvestmentRequestController extends Controller
                             $referrer->save();
                         }
 
+                        // Calculate team business
                         $power_leg_business = User::where('referal_by', $referrer->referal_code)
                             ->where('status', 2)
                             ->pluck('team_business')
                             ->max();
 
-                        // Calculate total business and other team business
                         $total_business = User::where('referal_by', $referrer->referal_code)
                             ->where('status', 2)
                             ->sum('team_business');
                         $other_team_business = $total_business - $power_leg_business;
 
-
-                        // Create a transaction history record
+                        // Create a transaction history record for rewards
                         foreach ($rewards as $reward) {
-                            // Get the max team business safely
                             Log::info('Check rewards ', ['reward' => $reward->team_business]);
-                            // Check if the reward criteria are met
                             if ($power_leg_business >= $reward->team_business && $other_team_business >= $reward->team_business) {
                                 $user_rewards = TransactionHistory::where('user_id', $referrer->id)
                                     ->where('reward_id', $reward->id)
                                     ->get();
-
-                                // Uncomment for debugging
-
-
 
                                 if ($user_rewards->isEmpty()) {
                                     TransactionHistory::create([
@@ -189,7 +175,7 @@ class InvestmentRequestController extends Controller
                             'level' => $level->level_name,
                             'type' => "2",
                             'to' => $referrer->id,
-                            'by' => $currentUser->id, // Make sure this is the correct user
+                            'by' => $currentUser->id,
                         ]);
 
                         Log::info('Transaction History Created', ['referrer_id' => $referrer->id, 'bonusAmount' => $bonusAmount]);
@@ -210,21 +196,18 @@ class InvestmentRequestController extends Controller
             $user_invest->save();
             $currentUser->save();
 
-            // Commit the transaction if all the above operations succeed
+            // Commit the transaction if all operations succeed
             DB::commit();
 
             return redirect()->back()->with('success', 'Investment request accepted successfully!');
         } catch (\Exception $e) {
             // Rollback the transaction on failure
             DB::rollback();
-
-            // Log the error message
             Log::error('Transaction failed: ', ['error' => $e->getMessage()]);
 
             return redirect()->back()->with('error', 'An error occurred while processing the request.');
         }
     }
-
 
     /**
      * Remove the specified resource from storage.

@@ -28,3 +28,10 @@
 
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $('#sidebarToggle').click(function() {
+            $('#sidebar').toggleClass('active'); // Add or remove 'active' class
+        });
+    });
+</script>

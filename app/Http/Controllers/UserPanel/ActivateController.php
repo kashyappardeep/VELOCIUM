@@ -55,40 +55,51 @@ class ActivateController extends Controller
     public function claimDaily()
     {
         $currentDate = Carbon::now();
-        $user = User::where('id', auth()->id())->first();
 
-        $user_investments = InvestmentHistory::with('package')
-            ->where('user_id', $user->id)
-            ->where('status', 2)
-            ->get();
+        // Get all users with investments
+        $users = User::whereHas('investmentHistory', function ($query) {
+            $query->where('status', 2); // Only include users with active investments
+        })->get();
 
-        $balance = 0;
-        $per_day_roi_rate = 0;
+        foreach ($users as $user) {
+            // Get the last claim date for the user
+            $lastClaimDate = $user->claimHistories()->latest()->first();
 
-        foreach ($user_investments as $investment) {
-            // Ensure amount and daily_ear_per are numeric
-            $daily_roi = floatval($investment->package->daily_ear_per); // Force to float
-            $amount = floatval($investment->amount); // Force to float
-            $lastClaimDate = $investment->created_at;
+            // Check if the user has never claimed or if the last claim was more than 24 hours ago
+            if (!$lastClaimDate || $lastClaimDate->created_at->diffInHours($currentDate) >= 24) {
+                $user_investments = InvestmentHistory::with('package')
+                    ->where('user_id', $user->id)
+                    ->where('status', 2)
+                    ->get();
 
-            // Use Carbon directly for created_at comparison
-            $differenceInSeconds = $lastClaimDate->diffInSeconds($currentDate);
+                $balance = 0;
+                $per_day_roi_rate = 0;
 
-            // Ensure valid calculation
-            $one_day_roi = $amount * $daily_roi / 100;
+                foreach ($user_investments as $investment) {
+                    $daily_roi = floatval($investment->package->daily_ear_per); // Force to float
+                    $amount = floatval($investment->amount); // Force to float
 
-            if ($one_day_roi > 0 && $differenceInSeconds > 0) {
-                $investment_claim_amount = ($one_day_roi / 86400) * $differenceInSeconds; // 86400 seconds in a day
-                $balance += $investment_claim_amount;
-                $per_day_roi_rate += $one_day_roi;
+                    // Calculate ROI
+                    $one_day_roi = $amount * $daily_roi / 100;
+                    $balance += $one_day_roi;
+                    $per_day_roi_rate += $one_day_roi;
+                }
+
+                // Create a transaction record for the user
+                TransactionHistory::create([
+                    'user_id' => $user->id,
+                    'amount' => $balance,
+                    'type' => "4",
+                    'claimed_at' => $currentDate,
+                ]);
+
+                // Update the user's balance
+                $user->balance += number_format($balance, 2); // Format claim amount with 2 decimals
+                $user->save();
             }
         }
-
-        // Update the user's balance
-        $user->balance += number_format($balance, 2); // Format claim amount with 2 decimals
-        $user->save();
-        return $user;
     }
+
 
 
 

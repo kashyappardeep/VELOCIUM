@@ -1,4 +1,4 @@
-{{-- include header --}}
+
 @include('includes.header');
                <div class="content">
                   <input type="hidden" name="ctl00$ContentPlaceHolder1$HidOrgTypeDashboard" id="HidOrgTypeDashboard" />
