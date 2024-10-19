@@ -165,7 +165,7 @@ fieldset {
         line-height: normal;
         padding: 0px;
         width: auto;
-        background: #CB971C;
+        background: #14ca83;
         border-radius: 2px;
         padding: 2px 5px;
     }
@@ -303,7 +303,7 @@ fieldset {
     outline: none;
     width: 100%;
     height: 50px;
-    background: #CB971C;
+    background: #14ca83;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -321,7 +321,7 @@ fieldset {
 }
 
     .login100-form-btn:hover {
-        background: #FB670D;
+        background: #007bff;
     }
 
 .login100-form .txt1{ margin-top:15px; display: inline-block;}
