@@ -51,13 +51,10 @@
       <link href="{{asset('assets/css/Dashboard.css?v=8')}}" rel="stylesheet" />
       <script language="JavaScript" type="text/javascript">
          function CopyURL(id) {
-             /* Get the text field */
-             var copyText = $('#' + id).attr('data-val');
+            var copyText = $('#' + id).attr('data-val');
          
-             /* Copy the text inside the text field */
              navigator.clipboard.writeText(copyText);
          
-             /* Alert the copied text */
              OpenAlert("Link copied to clipboard");
          }
       </script>
@@ -84,7 +81,6 @@
       </style>
    </head>
    <body>
-      {{-- <form method="post" action="./Dashboard.aspx" id="form1"> --}}
       <div class="aspNetHidden">
          <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="XSFWzyjgWKxMECbLjth4TWAcQElX6rqAjpOB+IzHpxipu1xOK2Gy0pQRL6NajYv1icnfwel8lfuu8c86EbzCob0fG4pjAdP1cvnNtC8noxk=" />
       </div>
@@ -208,14 +204,9 @@
                   </li>
                  
                   <li>
-                     {{-- <form action="{{ route('logout') }}" method="POST">
-                     <a >
-                        <i class="fa fa-sign-out"></i>
-                        <p>Logout</p>
-                     </a>
-                  </form> --}}
+                     
                   <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                     @csrf <!-- Include CSRF token for security -->
+                     @csrf 
                      <a href="#"> 
                          
                      <button type="submit" style="background: none;
@@ -260,8 +251,7 @@
                         </div>
                     @endif 
                     @if (session('error'))
-                    {{-- <div class="alert alert-danger" id="success-alert"> --}}
-                     <div class="alert alert-danger">
+                    <div class="alert alert-danger">
                         {{ session('error') }}
                     </div>
                 @endif
