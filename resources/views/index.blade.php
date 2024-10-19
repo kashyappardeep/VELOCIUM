@@ -12,7 +12,7 @@
       <title>
         VELOCIUM SYSTEM
       </title>
-      <link rel="apple-touch-icon" href="{{ route('login') }}" />
+      <link rel="apple-touch-icon" href="assets/home/images-3d-animation/logo.png" />
       <link href="assets/home/css/font-awesome.min.css" rel="stylesheet" />
       <link rel="stylesheet" type="text/css" href="assets/home/css/bootstrap.min.css" />
       <link rel="stylesheet" type="text/css" href="assets/home/fonts/themify/style.min.css" />
