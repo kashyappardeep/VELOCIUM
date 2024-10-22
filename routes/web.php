@@ -11,6 +11,8 @@ use App\Http\Controllers\UserPanel\RoyaltyRewardsController;
 use App\Http\Controllers\UserPanel\IncomesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\InvestmentRequestController;
+use App\Http\Controllers\Admin\AddFundController;
+use App\Http\Controllers\Admin\ActiveUserIdController;
 
 // Public routes
 Route::get('/', [UserController::class, 'index']);
@@ -19,6 +21,8 @@ Route::post('login', [UserController::class, 'login']);
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::get('/get-sponsor-name', [UserController::class, 'getSponsorName']);
+Route::post('/clear-session', [UserController::class, 'clearSession'])->name('clear.session');
 
 // Protected routes with 'auth' middleware
 Route::middleware('auth')->group(function () {
@@ -33,12 +37,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/addfund', [TransactionsController::class, 'addfund'])->name('addfund');
     Route::get('/ReportROI', [IncomesController::class, 'index'])->name('ReportROI');
     Route::get('/DirectIncome', [IncomesController::class, 'DirectIncome'])->name('DirectIncome');
-    Route::get('/ReportSponsorLevelIncome', [IncomesController::class, 'ReportSponsorLevelIncome'])->name('ReportSponsorLevelIncome');
+    Route::get('/LevelIncome', [IncomesController::class, 'LevelIncome'])->name('LevelIncome');
     Route::get('/ReportROILevelIncome', [IncomesController::class, 'ReportROILevelIncome'])->name('ReportROILevelIncome');
     Route::post('/invest', [ActivateController::class, 'invest'])->name('invest');
     Route::post('/withdraw', [TransactionsController::class, 'withdraw'])->name('withdraw');
     Route::get('/Royalty', [RoyaltyRewardsController::class, 'Royalty'])->name('Royalty');
     Route::post('/claim-reward/{reward}', [RoyaltyRewardsController::class, 'claimReward'])->name('claim.reward');
+    Route::post('/add-fund-request', [TransactionsController::class, 'addfundrequest'])->name('add.fund.request');
 
 
     Route::get('/claimDaily', [ActivateController::class, 'claimDaily'])->name('claimDaily');
@@ -59,7 +64,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::get('/active', [InvestmentRequestController::class, 'active'])->name('admin.active');
         Route::get('/reject', [InvestmentRequestController::class, 'reject'])->name('admin.reject');
         Route::post('/reject_request/{id}', [InvestmentRequestController::class, 'reject_request'])->name('reject_request');
+        Route::put('/accept_request/{id}', [AddFundController::class, 'accept_request'])->name('accept_request');
+        Route::put('/activation_user', [ActiveUserIdController::class, 'activation_user'])->name('activation_user');
+        Route::get('/dummy_id', [ActiveUserIdController::class, 'dummy_id'])->name('dummy_id');
+        Route::put('/active_dummy_id', [ActiveUserIdController::class, 'active_dummy_id'])->name('active_dummy_id');
 
         Route::resource('invest_req', InvestmentRequestController::class);
+        Route::resource('addfund', AddFundController::class);
+        Route::resource('active_user_id', ActiveUserIdController::class);
     });
 });

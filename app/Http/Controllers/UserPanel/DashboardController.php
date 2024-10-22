@@ -31,15 +31,13 @@ class DashboardController extends Controller
         $Active_Directs = User::where('referal_by', $user_data->referal_code)->where('status', 2)
             ->count();
 
-        $Directs_income = TransactionHistory::where('to', auth()->id())->where('type', 2)
-            ->sum('amount');
+
         $pending_reward = TransactionHistory::where('user_id', auth()->id())->where('type', 3)
             ->where('status', 0)
             ->sum('amount');
-        $comp_reward = TransactionHistory::where('user_id', auth()->id())->where('type', 3)
-            ->where('status', 1)
-            ->sum('amount');
-        // dd($Directs_income);
+
+
+
 
 
         $power_leg_business = User::where('referal_by', $user_data->referal_code)
@@ -99,9 +97,7 @@ class DashboardController extends Controller
             'max_day_roi',
             'total_daily_roi',
             'total_investment',
-            'comp_reward',
             'pending_reward',
-            'Directs_income',
             'power_leg_business',
             'total_business',
             'other_team_business',

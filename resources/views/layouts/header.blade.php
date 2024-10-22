@@ -202,6 +202,21 @@
                         <li><a href="{{route('admin.reject')}}">Reject</a> </li>
                      </ul>
                   </li>
+                  <li data-toggle="collapse" data-target="#Network" class="collapsed">
+                     <a><i class="fa fa-vcard"></i>Add Fund Request</a>
+                     <ul class="sub-menu collapse" id="Network">
+                        <li><a href="{{route('addfund.index')}}">Pending</a> </li>
+                        <li><a href="">Active</a> </li>
+                        <li><a href="">Reject</a> </li>
+                     </ul>
+                  </li>
+                  <li data-toggle="collapse" data-target="#Registration" class="collapsed">
+                     <a><i class="fa fa-vcard"></i>Admin Active User Id</a>
+                     <ul class="sub-menu collapse" id="Registration">
+                        <li><a href="{{route('active_user_id.index')}}">Active User ID</a> </li>
+                        <li><a href="{{ route('dummy_id') }}">Dummy User ID</a> </li>
+                     </ul>
+                  </li>
                  
                   <li>
                      

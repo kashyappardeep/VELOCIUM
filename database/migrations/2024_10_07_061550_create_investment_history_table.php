@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('amount');
             $table->string('tx_hash')->nullable();
             $table->foreignId('package_id');
+            $table->integer('type')->comment("1=>paid , 2=>dummy id");
             $table->string('address')->nullable();
             $table->integer('status')->default(0)->comment("1=>Pending,2=>Active");
             $table->timestamps();

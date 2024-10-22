@@ -33,9 +33,9 @@ class UserController extends Controller
         $validated = $request->validate([
             'prefix' => 'required|string|max:10',
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone' => 'required|string|max:15|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|string|email|max:255',
+            'phone' => 'required|string|max:15',
+            'password' => 'required|string|min:4|confirmed',
             'referal_by' => 'required|string|max:50|nullable',
         ], [
             'name.required' => 'The name field is required.',
@@ -66,6 +66,7 @@ class UserController extends Controller
                 'email' => $validated['email'],
                 'phone' => $validated['phone'],
                 'status' => "0",
+                'type' => "1",
                 'password' => $password,
                 'referal_code' => "VEL" . random_int(100000, 999999),
                 'referal_by' => $request->referal_by, // Save referral user ID if available
@@ -76,12 +77,25 @@ class UserController extends Controller
             // Log in the user after registration (optional)
             auth()->login($user);
 
-            return redirect()->route('dashboard')->with('success', 'Registration successful!');
+            session([
+                'username' => $user->name,
+                'loginId' => $user->referal_code,
+                'password' => $validated['password'], // or a random generated password
+            ]);
+
+            return redirect()->route('register')->with('success', 'Registration successful!');
         } catch (\Exception $e) {
             // Optionally handle the exception
             DB::rollBack();
             return response()->json(['register' => 'Register failed', 'message' => $e->getMessage()], 500);
         }
+    }
+    public function clearSession(Request $request)
+    {
+        // Clear specific session variables
+        $request->session()->forget(['username', 'loginId', 'password']);
+
+        return response()->json(['status' => 'success']);
     }
 
 
@@ -89,16 +103,18 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
+
+
         $request->validate([
-            'email' => 'required|email',
+            'referal_code' => 'required',
             'password' => 'required',
         ]);
 
         // Define credentials
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('referal_code', 'password');
 
         // Check if the user exists
-        $user = User::where('email', $credentials['email'])->first();
+        $user = User::where('referal_code', $credentials['referal_code'])->first();
 
         // echo Hash::make(12341234);
         //die;
@@ -112,17 +128,29 @@ class UserController extends Controller
                 Auth::login($user);
                 return redirect()->intended('dashboard');
             } else {
-                Log::info('Incorrect password for user', ['email' => $credentials['email']]);
+                Log::info('Incorrect password for user', ['referal_code' => $credentials['referal_code']]);
                 return redirect('/login')->with('error', 'Password is incorrect');
             }
         }
 
         // If the user is not found
-        Log::info('User not found', ['email' => $credentials['email']]);
+        Log::info('User not found', ['referal_code' => $credentials['referal_code']]);
         return redirect('/login')->with('error', 'Login credentials are not valid');
     }
 
+    public function getSponsorName(Request $request)
+    {
+        $sponsorId = $request->input('referal_by');
 
+        // Assuming you have a field 'referal_code' in your users table
+        $user = User::where('referal_code', $sponsorId)->first();
+
+        if ($user) {
+            return response()->json(['name' => $user->name]); // Adjust 'name' to match your User model's field
+        }
+
+        return response()->json(['name' => '']); // Return empty if not found
+    }
 
 
 

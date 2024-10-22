@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Packages;
 use App\Models\InvestmentHistory;
 use App\Models\TransactionHistory;
 use App\Models\User;
@@ -13,100 +14,49 @@ use App\Models\Config;
 use App\Models\Level;
 use App\Models\Reward;
 
-
-class InvestmentRequestController extends Controller
+class ActiveUserIdController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $Invest_req = InvestmentHistory::with('user')->where('status', 1)->get();
-        // dd($Invest_req);
 
-        return view('Admin.investment.index', compact('Invest_req'));
-    }
-
-    public function active()
-    {
-        $Invest_req = InvestmentHistory::with('user')->where('status', 2)->get();
-        // dd($Invest_req);
-
-        return view('Admin.investment.active', compact('Invest_req'));
-    }
-    public function reject()
-    {
-        $Invest_req = InvestmentHistory::with('user')->where('status', 3)->get();
-        // dd($Invest_req);
-
-        return view('Admin.investment.reject', compact('Invest_req'));
-    }
-
-    public function reject_request($id, Request $request)
-    {
-        // Find the investment by ID
-        $investment = InvestmentHistory::findOrFail($id);
-        // dd($investment);
-        // Update the investment status to 'rejected'
-        $investment->status = 3; // Adjust based on your status field
-        $investment->save();
-
-        return redirect()->route('invest_req.index')->with('success', 'Investment rejected successfully.');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        $all_packages = Packages::get();
+        // dd($all_packages);
+        // $user = User::where('id', auth()->id())->first();
+        // dd($all_packages);
+        return view('Admin.admin_active_id.index', compact('all_packages'));
     }
 
 
-    // Active user packege
-    public function update(Request $request, string $id)
+    public function activation_user(Request $request)
+
     {
         DB::beginTransaction(); // Start transaction
 
         try {
             // Fetch the investment history
-            $user_invest = InvestmentHistory::findOrFail($id);
+            $user_invest = Packages::where('id', $request->package_id)->first();
 
-            // Fetch the user associated with the investment
-            $currentUser = User::findOrFail($user_invest->user_id);
+            $currentUser = User::where('referal_code', $request->user_id)->first();
+            InvestmentHistory::create([
+                'user_id' => $currentUser->id,
+                'amount' => $user_invest->amount,
+                'status' => 2,
+                'type' => 2,
+                'package_id' => $request->package_id,
+            ]);
             $levels = Level::all();
             $rewards = Reward::all();
             $dirct_sponser = Config::first();
             $direct_referrer = User::where('referal_code', $currentUser->referal_by)
                 ->where('status', 2)
                 ->first();
-            // dd($direct_referrer);
+
+
             $direct = $user_invest->amount * $dirct_sponser->direct_sponser / 100;
-            // dd($direct_referrer);
+
             if ($direct_referrer) {
 
 
@@ -126,22 +76,20 @@ class InvestmentRequestController extends Controller
                 $referrer_count = User::where('referal_by', $currentUser->referal_by)
                     ->where('status', 2)
                     ->count();
-                $referrer = User::where('referal_code', $currentUser->referal_by)
-                    ->where('status', 2)
-                    ->first();
-
-                if ($referrer) {
-                    $referrer->team_business += $user_invest->amount;
-                    $referrer->save();
-                }
 
 
 
+                // Log::info('Checking direct referrals', [
+                //     'level_direct' => $level->direct,
+                //     'referrer_count' => $referrer_count,
+                // ]);
 
                 if ($level->direct <= $referrer_count) {
                     if ($currentUser && $currentUser->referal_by) {
                         // Find the referrer
-
+                        $referrer = User::where('referal_code', $currentUser->referal_by)
+                            ->where('status', 2)
+                            ->first();
 
                         // Check if the referrer exists
                         if (!$referrer) {
@@ -158,6 +106,8 @@ class InvestmentRequestController extends Controller
 
 
                             $referrer->level_balance += $bonusAmount;
+                            $referrer->team_business += $user_invest->amount;
+                            $referrer->save();
                         }
 
                         // Calculate team business
@@ -214,11 +164,12 @@ class InvestmentRequestController extends Controller
                 }
             }
 
+
+
             // Update the status of the user and the investment
-            $currentUser->activation_balance -= $user_invest->amount;
+
 
             $currentUser->status = 2;
-            $user_invest->status = 2;
 
             $user_invest->save();
             $currentUser->save();
@@ -236,11 +187,85 @@ class InvestmentRequestController extends Controller
         }
     }
 
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         //
+    }
+
+    public function dummy_id(Request $request)
+    {
+        return view('Admin.admin_active_id.dummy_id');
+    }
+    public function active_dummy_id(Request $request)
+    {
+        try {
+            // Check if the package exists
+            $user_invest = Packages::where('id', $request->package_id)->first();
+            if (!$user_invest) {
+                return redirect()->back()->with('error', 'Invalid package selected.');
+            }
+
+            // Check if the user exists
+            $currentUser = User::where('referal_code', $request->user_id)->first();
+            if (!$currentUser) {
+                return redirect()->back()->with('error', 'User with the provided referral code not found.');
+            }
+
+            // Proceed with creating the InvestmentHistory
+            InvestmentHistory::create([
+                'user_id' => $currentUser->id,
+                'amount' => $user_invest->amount,
+                'status' => 2,
+                'type' => 2,
+                'package_id' => $request->package_id,
+            ]);
+
+            return redirect()->back()->with('success', 'Dummy User Id Activate successfully!');
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            Log::error('Transaction failed: ', ['error' => $e->getMessage()]);
+
+            return redirect()->back()->with('error', 'An error occurred while processing the request.');
+        }
     }
 }

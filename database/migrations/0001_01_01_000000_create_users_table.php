@@ -16,11 +16,17 @@ return new class extends Migration
             $table->string('prefix');
             $table->string('name');
 
-            $table->string('email')->unique();
-            $table->string('phone')->unique();
+            $table->string('email');
+            $table->string('phone');
             $table->string('referal_code')->unique();
             $table->string('referal_by');
-            $table->integer('balance')->nullable();
+            $table->integer('activation_balance')->nullable();
+            $table->integer('withdrawable')->nullable();
+            $table->integer('type')->comment("1=>paid , 2=>dummy id");
+            $table->integer('staking_balance')->nullable();
+            $table->integer('direct_balance')->nullable();
+            $table->integer('level_balance')->nullable();
+            $table->integer('royalty_balance')->nullable();
             $table->integer('team_business')->nullable();
             $table->string('gender')->nullable();
             $table->integer('status')->default(0)->comment("0=>inactive,1=>active");

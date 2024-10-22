@@ -236,6 +236,7 @@
                      <a>
                      <i class="fa fa-file"></i>Transactions</a>
                      <ul class="sub-menu collapse" id="Transaction">
+                        <li><a href="{{route('addfund')}}">Add Fund</a> </li>
                         <li><a href="{{route('WithdrawalRequest')}}">Claim My Earning</a> </li>
                         <li><a href="{{route('DepositHistory')}}">Deposit History</a> </li>
                         <li><a href="{{route('WithdrawalHistory')}}">Withdrawal History</a> </li>
@@ -248,6 +249,7 @@
                      <ul class="sub-menu collapse" id="Report">
                         <li><a href="{{route('ReportROI')}}">ROI Income</a></li>
                         <li><a href="{{route('DirectIncome')}}">Direct Income</a></li>
+                        <li><a href="{{route('LevelIncome')}}">Level Income</a></li>
                         
                       </ul>
                   </li>

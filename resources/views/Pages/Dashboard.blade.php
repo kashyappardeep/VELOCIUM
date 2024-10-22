@@ -83,7 +83,7 @@
                               <div class="row">
                                  <div class="col-6 col-md-6 taskrounbd">
                                     <div class="cashsales">
-                                       <figure>{{ number_format($user_data->balance, 2) }}</figure>
+                                       <figure>{{ number_format($user_data->activation_balance, 2) }}</figure>
                                        <h2 style="text-transform: none;">Activation Balance</h2>
                                     </div>
                                  </div>
@@ -112,16 +112,13 @@
                                     <th class="tdjobid">Daily Earning</th>
                                     <th style="text-align: right;" id="lblDailyEarning">{{$total_daily_roi}}</th>
                                  </tr>
-                                 <tr>
-                                    <th class="tdjobid">Earning Limit <span id="lblLimitPer" class="text-warning"></span></th>
-                                    <th style="text-align: right;" id="lblLimit">{{$max_day_roi}}</th>
-                                 </tr>
+                                 
                                  <tr>
                                     <th class="tdjobid">Received Earning <span id="lblEarningPer" class="text-warning" style="font-family: 'Segoe UI'"></span></th>
                                     <th style="text-align: right;" id="lblEarning">{{$witdrowal}}</th>
                                  </tr>
                                  <tr>
-                                    <th style="width: 80px;" class="tdjobid">Balance Earning <span id="lblBalanceEarningPer" class="text-success" style="font-family: 'Segoe UI'"></span></th>
+                                    <th style="width: 80px;" class="tdjobid">Earning Limit <span id="lblBalanceEarningPer" class="text-success" style="font-family: 'Segoe UI'"></span></th>
                                     <th style="width: 100px; text-align: right;" id="lblBalanceEarning">{{$Balance_Earning}}</th>
                                  </tr>
                               </table>
@@ -145,7 +142,7 @@
                               <div class="profiledetail-right profiledetail">
                                  <h3 id="divMemberName"></h3>
                                  <div class="profile-memberid">ID: <span >{{$user_data->referal_code}}</span></div>
-                                 <div class="profile-text profile-sponsorid">Referral: <span>{{$user_data->referal_code}}</span></div>
+                                 <div class="profile-text profile-sponsorid">Referral: <span>{{$user_data->referal_by}}</span></div>
                                  <div class="profile-text profile-regdate">Date of Registration: <span >{{$user_data->created_at}}</span></div>
                                  <div class="profile-text profile-activedate">Package: <span >{{$user_data->created_at}}</span></div>
                                  <div class="profile-text profile-activedate">
@@ -193,26 +190,24 @@
                            <div class="card-header ">
                               <h5 class="card-title">My Earning</h5>
                            </div>
-                           <div class="card-body " style="height: 296px; overflow: auto">
+                           <div class="card-body " style="height: auto; overflow: auto">
                               <table id="tblMyEarning" class="tblJobOrderItem">
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid">Staking Income</th>
                                     <th style="width: 100px; text-align: right;" id="tdROIIncome">0.00</th>
                                  </tr>
-                                 <tr>
-                                    <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPROIIncome">0.00</i></span></td>
-                                 </tr>
                                  
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid"> Level Reward</th>
-                                    <th style="width: 100px; text-align: right;" id="tdSonsorLevelIncome">{{$Directs_income}}</th>
+                                    <th style="width: 100px; text-align: right;" id="tdSonsorLevelIncome">{{$user_data->level_balance}}</th>
                                  </tr>
                                  <tr>
-                                    <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPSonsorLevelIncome">0.00</i></span></td>
+                                    <th style="width: 80px;" class="tdjobid">Direct Income</th>
+                                    <th style="width: 100px; text-align: right;">{{$user_data->direct_balance}}</th>
                                  </tr>
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid">Royalty Rewards</th>
-                                    <th style="width: 100px; text-align: right;" id="tdROILevelIncome">{{$comp_reward}}</th>
+                                    <th style="width: 100px; text-align: right;" id="tdROILevelIncome">{{$user_data->royalty_balance}}</th>
                                  </tr>
                                  <tr>
                                     <td colspan="2" class="tdWIPDtl"><span class="wipqty">Pending Amount: <i id="tdPROILevelIncome">{{$pending_reward}}</i></span></td>
