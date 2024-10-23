@@ -143,8 +143,8 @@
                                  <h3 id="divMemberName"></h3>
                                  <div class="profile-memberid">ID: <span >{{$user_data->referal_code}}</span></div>
                                  <div class="profile-text profile-sponsorid">Referral: <span>{{$user_data->referal_by}}</span></div>
-                                 <div class="profile-text profile-regdate">Date of Registration: <span >{{$user_data->created_at}}</span></div>
-                                 <div class="profile-text profile-activedate">Package: <span >{{$user_data->created_at}}</span></div>
+                                 <div class="profile-text profile-regdate">Date of Registration: <span >{{$user_data->created_at->format('Y-m-d')}}</span></div>
+                                 <div class="profile-text profile-activedate">Name: <span >{{$user_data->name}}</span></div>
                                  <div class="profile-text profile-activedate">
                                     Active Status: @if ($user_data->status ==0 )
                                     <span >Inactive</span>
@@ -285,32 +285,38 @@
                               </div>
                            </div>
                         </div>
-                        {{-- <div class="row">
-                           <div class="col-md-12">
-                              <div class="card " style="margin-top: 10px;">
-                                 <div class="card-header ">
-                                    <h5 class="card-title">My Investment History</h5>
-                                 </div>
-                                 <div class="card-body " style="height: 93px; overflow: auto">
-                                    <table id="tblMyPurchase" class="tblwipitem"></table>
-                                 </div>
-                              </div>
+                        <div class="row">
+                           <div class="col-md-10">
+                               <div class="card" style="margin-top: 10px;">
+                                   <div class="card-header">
+                                       <h5 class="card-title">My Investment History</h5>
+                                   </div>
+                                   <div class="card-body" style="height: auto;">
+                                       <table id="tblMyPurchase" class="tblwipitem table table-striped" style="border: none;">
+                                           <thead>
+                                               <tr>
+                                                   <th>Amount</th>
+                                                   <th>Date</th>
+                                               </tr>
+                                           </thead>
+                                           <tbody>
+                                               @foreach($user_investments   as $investment)
+                                               <tr>
+                                                   <td>{{ number_format($investment->amount, 2) }}</td> <!-- Format the amount -->
+                                                   <td>{{ $investment->created_at->format('Y-m-d') }}</td> <!-- Format the date -->
+                                               </tr>
+                                               @endforeach
+                                           </tbody>
+                                       </table>
+                                   </div>
+                               </div>
                            </div>
-                        </div> --}}
+                       </div>
+                       
                      </div>
+                    
                   </div>
-                  {{-- <div class="row">
-                     <div class="col-md-12">
-                        <div class="card " style="margin-top: 10px;">
-                           <div class="card-header ">
-                              <h5 class="card-title">Latest News</h5>
-                           </div>
-                           <div class="card-body " style="height: 200px; overflow: auto">
-                              <div id="divnews"></div>
-                           </div>
-                        </div>
-                     </div>
-                  </div> --}}
+                 
                   <script src="assets/js/plugins/chartjs.min.js"></script>
                   <script src="UserJs/Dashboard/Dashboard.js?version=2"></script>
                </div>
