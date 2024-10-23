@@ -22,13 +22,17 @@ class IncomesController extends Controller
         // dd($direct_income);
         return view('Pages.Incomes.DirectIncome', compact('direct_income'));
     }
-    public function LevelIncome()
+    public function LevelIncome(Request $request)
     {
-        $level_income = TransactionHistory::with('user.investmentHistory')->where('to', auth()->id())
-            ->where('type', 2)->get();
-        // dd($level_income);
+        // Use pagination, e.g., 10 records per page
+        $level_income = TransactionHistory::with('user.investmentHistory')
+            ->where('to', auth()->id())
+            ->where('type', 2)
+            ->paginate(10); // Change the number to set how many items per page
+
         return view('Pages.Incomes.Level_Income', compact('level_income'));
     }
+
     public function ReportROILevelIncome()
     {
         return view('Pages.Incomes.ReportROILevelIncome');

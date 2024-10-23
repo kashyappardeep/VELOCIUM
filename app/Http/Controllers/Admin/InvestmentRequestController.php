@@ -122,6 +122,7 @@ class InvestmentRequestController extends Controller
 
             // Loop through levels to calculate bonuses
             foreach ($levels as $level) {
+                Log::info('Check level ', ['level' => $level]);
 
                 $referrer_count = User::where('referal_by', $currentUser->referal_by)
                     ->where('status', 2)
@@ -140,6 +141,7 @@ class InvestmentRequestController extends Controller
 
 
                 if ($level->direct <= $referrer_count) {
+
                     if ($currentUser && $currentUser->referal_by) {
                         // Find the referrer
 

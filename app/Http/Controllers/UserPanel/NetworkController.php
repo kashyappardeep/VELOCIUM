@@ -15,12 +15,14 @@ class NetworkController extends Controller
     public function index()
     {
         $user = User::where('id', auth()->id())->first();
+        // Fetch direct income with pagination
         $DirectTeam = User::with('investmentHistory')
             ->where('referal_by', $user->referal_code)
-            ->get();
-        // dd($DirectTeam);
+            ->paginate(10); // Change the number 10 to your desired number of items per page
+
         return view('Pages.network.DirectTeam', compact('DirectTeam'));
     }
+
 
     public function TeamList()
     {
