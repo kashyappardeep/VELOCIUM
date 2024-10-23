@@ -146,7 +146,7 @@
                                  <div class="profile-text profile-regdate">Date of Registration: <span >{{$user_data->created_at}}</span></div>
                                  <div class="profile-text profile-activedate">Package: <span >{{$user_data->created_at}}</span></div>
                                  <div class="profile-text profile-activedate">
-                                    Active Status: @if ($user_data->status ==1 )
+                                    Active Status: @if ($user_data->status ==0 )
                                     <span >Inactive</span>
                                     @else
                                     <span >Active</span>
