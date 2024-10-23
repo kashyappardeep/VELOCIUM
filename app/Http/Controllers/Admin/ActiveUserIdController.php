@@ -138,17 +138,21 @@ class ActiveUserIdController extends Controller
                     // Calculate team business for rewards
                     $power_leg_business = User::where('referal_by', $referrer->referal_code)
                         ->where('status', 2)
-                        ->max('team_business');
+                        ->pluck('team_business')
+                        ->max();
 
-                    $total_business = User::where('referal_by', $referrer->referal_code)
+                    $total_leg_business = User::where('referal_by', $referrer->referal_code)
                         ->where('status', 2)
-                        ->sum('team_business');
+                        ->pluck('team_business')
+                        ->sum();
+
+                    $total_business = $referrer->team_business + $total_leg_business;
 
                     $other_team_business = $total_business - $power_leg_business;
 
                     // Process rewards if the team business qualifies
                     foreach ($rewards as $reward) {
-                        if ($power_leg_business >= $reward->team_business && $other_team_business >= $reward->team_business) {
+                        if ((int) $power_leg_business >= (int) $reward->team_business && (int) $other_team_business >= (int) $reward->team_business) {
                             // Check if the referrer has already received the reward
                             $reward_already_received = TransactionHistory::where('user_id', $referrer->id)
                                 ->where('reward_id', $reward->id)
@@ -156,8 +160,7 @@ class ActiveUserIdController extends Controller
 
                             if (!$reward_already_received) {
                                 // Add the reward to the referrer's royalty balance
-                                $referrer->royalty_balance += $reward->reward;
-                                $referrer->save();
+
 
                                 // Record the reward in the transaction history
                                 TransactionHistory::create([

@@ -43,7 +43,7 @@ class TransactionsController extends Controller
             // Redirect back with a success message
             return redirect()->back()->with('error', 'The minimum withdrawal amount is $20.');
         }
-        if ($user->balance < $amount) {
+        if ($user->withdrawable < $amount) {
             // Redirect back with an error message for insufficient balance
             return redirect()->back()->with('error', 'Insufficient balance for this withdrawal request.');
         }
