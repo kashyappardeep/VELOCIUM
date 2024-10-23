@@ -266,7 +266,7 @@
                                        </tr>
                                        <tr>
                                           <td style="width: 80px;" class="tdjobid"><i class="fa fa-angellist"></i>&nbsp;Total Active Team</td>
-                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamPV">0</td>
+                                          <td style="width: 100px; text-align: right;" id="tdTotalTeamPV">{{$indirectUsersCount}}</td>
                                        </tr>
                                        <tr>
                                           <td style="width: 80px;" class="tdjobid"><i class="fa fa-angellist"></i>&nbsp;Power Leg Team</td>

@@ -91,6 +91,10 @@ class DashboardController extends Controller
         }
         $max_day_roi = $max_amt * $max_ear_per / 100;
         // dd($total_daily_roi);
+        $indirectUsers = $this->getAllIndirectUsers($user_data);  // Use $this here
+        $indirectUsersCount = count($indirectUsers);
+        // dd($indirectUsersCount);
+
         $referralLink = url('/register?referral=' . $user_data->referal_code);
         // dd($referralLink);
         return view('Pages.Dashboard', compact(
@@ -104,12 +108,30 @@ class DashboardController extends Controller
             'power_leg_business',
             'total_business',
             'other_team_business',
+            'indirectUsersCount',
             'user_reward',
             'InvestmentHistoryCount',
             'Active_Directs',
             'referralLink'
         ));
     }
+    function getAllIndirectUsers($user_data, &$indirectUsers = [])
+    {
+        // Get all direct users referred by this user's referral code
+        $directUsers = User::where('referal_by', $user_data->referal_code)->get(); // Fetch user models instead of just IDs
+
+        // Add direct users to the list of indirect users
+        foreach ($directUsers as $directUser) {
+            $indirectUsers[] = $directUser->id;
+            // Recursive call for each direct user to get their referrals
+            $this->getAllIndirectUsers($directUser, $indirectUsers); // Pass the user model, not the ID
+        }
+
+        return $indirectUsers;
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
