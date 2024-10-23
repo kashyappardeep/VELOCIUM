@@ -107,7 +107,7 @@ class ActivateController extends Controller
                 ]);
 
                 // Update the user's balance
-                $user->balance += number_format($balance, 2); // Format claim amount with 2 decimals
+                $user->staking_balance += number_format($balance, 2); // Format claim amount with 2 decimals
                 $user->save();
             }
         }

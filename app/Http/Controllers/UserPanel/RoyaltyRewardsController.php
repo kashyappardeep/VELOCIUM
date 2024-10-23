@@ -25,7 +25,7 @@ class RoyaltyRewardsController extends Controller
             $user = User::findOrFail($reward->user_id); // Find the user by ID
 
             // Add the reward amount to the user's balance
-            $user->balance += $reward->amount;
+            $user->royalty_balance += $reward->amount;
             $user->save();
 
             // Mark the reward as claimed (set status to 1)
