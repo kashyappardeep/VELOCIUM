@@ -216,8 +216,6 @@ class InvestmentRequestController extends Controller
                 }
             }
 
-            // Update the status of the user and the investment
-            $currentUser->activation_balance -= $user_invest->amount;
 
             $currentUser->status = 2;
             $user_invest->status = 2;
