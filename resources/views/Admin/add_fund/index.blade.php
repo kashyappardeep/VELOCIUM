@@ -44,7 +44,7 @@
                                     @if ($add_fund_req)
                                     @foreach($add_fund_req as $add_fund_req) 
                                     <tr class="odd">
-                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$add_fund_req->user->name}}</td>
+                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$add_fund_req->user->referal_code}}</td>
                                         <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$add_fund_req->created_at}}</td>
                                         <td style="width: 135px" data-column-index="2" class="sorting_disabled"  aria-label="Amount">{{$add_fund_req->amount}}</td>
                                         @IF($add_fund_req->status == 1)
