@@ -20,7 +20,7 @@
                                  <table class="table table-striped table-bordered dataTable no-footer" style="width: 100%; margin-left: 0px;" role="grid">
                                     <thead>
                                        <tr role="row" >
-                                          <th style="width: 106px;" data-column-index="0" class="sorting_asc DTCR_tableHeader thwidth1" tabindex="0" aria-controls="tbldata" rowspan="1" colspan="1"  aria-sort="ascending" aria-label="Date: activate to sort column descending">ID</th>
+                                          <th  data-column-index="0" class="sorting_asc DTCR_tableHeader thwidth1" tabindex="0" aria-controls="tbldata" rowspan="1" colspan="1"  aria-sort="ascending" aria-label="Date: activate to sort column descending">ID</th>
                                           {{-- <th data-column-index="1" class="sorting" tabindex="0" aria-controls="tbldata" rowspan="1" colspan="1" style="width: 437.01px;" aria-label="Transaction ID: activate to sort column ascending">Transaction ID</th> --}}
                                           <th  data-column-index="2" class="sorting_disabled thwidth2" rowspan="1" colspan="1" aria-label="Amount">Name</th>
                                           <th  data-column-index="2" class="sorting_disabled thwidth2" rowspan="1" colspan="1" aria-label="Amount">Package</th>
@@ -38,7 +38,7 @@
                                     @foreach($DirectTeam as $user) <!-- Iterate through each user -->
                                     <tr role="row" class="odd">
                                        <!-- User Information -->
-                                       <td>{{$user->id}}</td>
+                                       <td >{{$user->referal_code}}</td>
                                        <td>{{$user->name}}</td>
                                  
                                        <!-- Calculate the total sum of investments -->

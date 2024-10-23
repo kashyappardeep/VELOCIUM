@@ -37,7 +37,7 @@ class ActivateController extends Controller
         }
         $user = User::where('id', auth()->id())->first();
 
-
+        // dd($user);
 
         try {
             $Packages_detals = Packages::where('id', $request->package_id)->first();
@@ -54,6 +54,9 @@ class ActivateController extends Controller
                 'package_id' => $request->package_id,
             ]);
             // dd(auth()->id());
+
+            $user->activation_balance -= $Packages_detals;
+            $user->save();
             return redirect()->back()->with('success', 'Package activated successfully!');
         } catch (\Exception $e) {
             // Rollback the transaction
