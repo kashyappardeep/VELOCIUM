@@ -44,7 +44,7 @@ class DashboardController extends Controller
             ->where('status', 2)
             ->pluck('team_business')
             ->max();
-
+        // dd($power_leg_business);
         $user_reward = TransactionHistory::where('user_id', auth()->id())
             ->where('status', 0)
             ->where('type', 3)

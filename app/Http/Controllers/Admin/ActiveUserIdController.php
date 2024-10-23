@@ -77,8 +77,14 @@ class ActiveUserIdController extends Controller
                     ->where('status', 2)
                     ->count();
 
+                $referrer = User::where('referal_code', $currentUser->referal_by)
+                    ->where('status', 2)
+                    ->first();
+                if ($referrer) {
+                    $referrer->team_business += $user_invest->amount;
 
-
+                    $referrer->save();
+                }
                 // Log::info('Checking direct referrals', [
                 //     'level_direct' => $level->direct,
                 //     'referrer_count' => $referrer_count,
@@ -91,6 +97,7 @@ class ActiveUserIdController extends Controller
                             ->where('status', 2)
                             ->first();
 
+
                         // Check if the referrer exists
                         if (!$referrer) {
                             Log::warning('Referrer not found', ['referal_by' => $currentUser->referal_by]);
@@ -102,11 +109,12 @@ class ActiveUserIdController extends Controller
                         Log::info('Bonus Amount Calculated', ['bonusAmount' => $bonusAmount]);
 
                         // Update the referrer's wallet if their status is active
+
                         if ($referrer->status == 2) {
 
 
                             $referrer->level_balance += $bonusAmount;
-                            $referrer->team_business += $user_invest->amount;
+
                             $referrer->save();
                         }
 
