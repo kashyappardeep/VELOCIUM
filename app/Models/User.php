@@ -22,11 +22,17 @@ class User extends Authenticatable
         'name',
         'email',
         'phone',
+        'withdrawable',
+        'staking_balance',
+        'direct_balance',
+        'level_balance',
+        'royalty_balance',
         'password',
         'referal_code',
         'referal_by',
+        'type',
         'gender',
-        'balance',
+        'activation_balance',
         'team_business'
     ];
 

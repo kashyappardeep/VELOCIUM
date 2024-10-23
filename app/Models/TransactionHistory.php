@@ -20,6 +20,7 @@ class TransactionHistory extends Model
         'to',
         'by',
         'level',
+        'Direct',
     ];
 
     public function user()

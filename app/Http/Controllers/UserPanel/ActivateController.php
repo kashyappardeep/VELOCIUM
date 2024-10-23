@@ -20,7 +20,9 @@ class ActivateController extends Controller
     {
         $all_packages = Packages::get();
         // dd($all_packages);
-        return view('Pages.activation.ActivateMyID', compact('all_packages'));
+        $user = User::where('id', auth()->id())->first();
+        // dd($user);
+        return view('Pages.activation.ActivateMyID', compact('all_packages', 'user'));
     }
 
     public function invest(Request $request)
@@ -33,14 +35,22 @@ class ActivateController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 400);
         }
+        $user = User::where('id', auth()->id())->first();
+
+
 
         try {
             $Packages_detals = Packages::where('id', $request->package_id)->first();
-            // dd($Packages_detals);
+
+            if ($user->activation_balance < $Packages_detals->amount) {
+                return redirect()->back()->with('error', 'Insufficient balance!');
+            }
+
             $investmentHistory = InvestmentHistory::create([
                 'user_id' => auth()->id(),
                 'amount' => $Packages_detals->amount,
                 'status' => 1,
+                'type' => 1,
                 'package_id' => $request->package_id,
             ]);
             // dd(auth()->id());

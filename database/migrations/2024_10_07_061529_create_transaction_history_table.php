@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('transaction_history', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->integer('amount');
+            $table->decimal('amount', 10, 2);
             $table->unsignedBigInteger('to')->nullable();
             $table->unsignedBigInteger('by')->nullable();
             $table->integer('status')->default(0)->comment("0=>inactive,1=>active");
-            $table->integer('type')->comment("1=>withdraw,2=>Referred,3=>reward,4 =>ROI");
+            $table->integer('type')->comment("1=>withdraw,2=>Referred,3=>reward,4 =>ROI,5=>Direct ");
             $table->foreignId('reward_id')->nullable();
             $table->string('level')->nullable();
             $table->timestamps();

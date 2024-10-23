@@ -33,14 +33,14 @@
                  @endif
                      <!-- Username input field -->
                      <div class="wrap-input100 validate-input">
-                        <input name="email" value="{{ old('email') }}" type="text" class="input100" placeholder="Username" value="{{ old('loginId') }}" />
+                        <input name="referal_code" value="{{ old('referal_code') }}" type="text" class="input100" placeholder="Username" value="{{ old('loginId') }}" />
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
                         <i class="fa fa-user" aria-hidden="true"></i>
                         </span>
                      </div>
                      <!-- Error message for loginId -->
-                     @error('email')
+                     @error('referal_code')
                         <div class="alert alert-danger">{{ $message }}</div>
                      @enderror
 

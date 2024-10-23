@@ -8,6 +8,7 @@ use App\Models\InvestmentHistory;
 use App\Models\TransactionHistory;
 
 use App\Models\User;
+use App\Models\AddFund;
 
 class TransactionsController extends Controller
 {
@@ -23,7 +24,7 @@ class TransactionsController extends Controller
 
     public function DepositHistory()
     {
-        $invest_detail = InvestmentHistory::where('user_id', auth()->id())->get();
+        $invest_detail = AddFund::where('user_id', auth()->id())->get();
         // dd($invest_detail);
         return view('Pages.transactions.DepositHistory', compact('invest_detail'));
     }
@@ -66,6 +67,30 @@ class TransactionsController extends Controller
     {
         return view('Pages.transactions.AddFund');
     }
+
+    public function addfundrequest(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'amount' => 'required|numeric|min:0', // Ensure amount is a positive number
+            'transaction_id' => 'required|string|max:200',
+            'remarks' => 'nullable|string|max:200',
+        ]);
+
+        // Create a new AddFund record
+        AddFund::create([
+            'user_id' => auth()->id(), // Assuming the user is logged in
+            'amount' => $request->input('amount'),
+            'status' => 1,
+            'type' => 1,
+            'transaction_id' => $request->input('transaction_id'),
+            'remarks' => $request->input('remarks'),
+        ]);
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Fund request submitted successfully.');
+    }
+
 
 
 
