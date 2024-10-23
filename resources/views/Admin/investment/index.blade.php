@@ -44,7 +44,7 @@
                                     @if ($Invest_req)
                                     @foreach($Invest_req as $Invest_req) 
                                     <tr class="odd">
-                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->user->name}}</td>
+                                        <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->user->referal_code}}</td>
                                         <td  class="sorting_asc DTCR_tableHeader" tabindex="0" aria-controls="tbldata" style="width: 193.531px; cursor: pointer;" aria-sort="ascending" aria-label="Date: activate to sort column descending" >{{$Invest_req->created_at}}</td>
                                         <td style="width: 135px" data-column-index="2" class="sorting_disabled"  aria-label="Amount">{{$Invest_req->amount}}</td>
                                         @IF($Invest_req->status == 1)

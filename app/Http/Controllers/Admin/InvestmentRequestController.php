@@ -46,10 +46,13 @@ class InvestmentRequestController extends Controller
     {
         // Find the investment by ID
         $investment = InvestmentHistory::findOrFail($id);
-        // dd($investment);
+        $user = User::where('id', $investment->user_id)->first();
+        dd($investment);
         // Update the investment status to 'rejected'
+        $user->activation_balance += $investment->amount;
         $investment->status = 3; // Adjust based on your status field
         $investment->save();
+        $user->save();
 
         return redirect()->route('invest_req.index')->with('success', 'Investment rejected successfully.');
     }

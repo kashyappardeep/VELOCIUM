@@ -65,7 +65,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/active', [InvestmentRequestController::class, 'active'])->name('admin.active');
         Route::get('/reject', [InvestmentRequestController::class, 'reject'])->name('admin.reject');
-        Route::post('/reject_request/{id}', [InvestmentRequestController::class, 'reject_request'])->name('reject_request');
+        Route::put('/reject_request/{id}', [InvestmentRequestController::class, 'reject_request'])->name('reject_request');
         Route::put('/accept_request/{id}', [AddFundController::class, 'accept_request'])->name('accept_request');
         Route::put('/activation_user', [ActiveUserIdController::class, 'activation_user'])->name('activation_user');
         Route::get('/dummy_id', [ActiveUserIdController::class, 'dummy_id'])->name('dummy_id');

@@ -106,7 +106,15 @@ class ActiveUserIdController extends Controller
                     ->where('status', 2)
                     ->count();
 
+                $referrer = User::where('referal_code', $currentUser->referal_by)
+                    ->where('status', 2)
+                    ->first();
 
+                if ($referrer) {
+                    $referrer->team_business += $user_invest->amount;
+
+                    $referrer->save();
+                }
 
                 // Check if the referrer qualifies for this level
                 if ($referrer_direct_count >= $level->direct) {
