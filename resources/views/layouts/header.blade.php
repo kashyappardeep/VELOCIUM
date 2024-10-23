@@ -219,21 +219,18 @@
                   </li>
                  
                   <li>
-                     
-                  <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                     @csrf 
-                     <a href="#"> 
-                         
-                     <button type="submit" style="background: none;
-                     display: flex;
-                     color: #25e487;
-                     border: none;">
-                        <i class="fa fa-sign-out"></i>
-                         <p>Logout</p>
-                     </button>
+                     <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                         <button type="button" style="background: none; display: flex; color: #25e487; border: none;">
+                             <i class="fa fa-sign-out"></i>
+                             <p>Logout</p>
+                         </button>
                      </a>
-                 </form>
-                  </li>
+                 
+                     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">
+                         @csrf
+                     </form> 
+                 </li>
+                 
                </ul>
             </div>
          </div>

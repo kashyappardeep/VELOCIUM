@@ -16,8 +16,8 @@ use App\Http\Controllers\Admin\ActiveUserIdController;
 
 // Public routes
 Route::get('/', [UserController::class, 'index']);
-Route::get('login', [UserController::class, 'showLoginForm'])->name('login');
-Route::post('login', [UserController::class, 'login']);
+Route::get('login', [UserController::class, 'showLoginForm']);
+Route::post('login', [UserController::class, 'login'])->name('login');
 Route::post('logout', [UserController::class, 'logout'])->name('logout');
 Route::get('/register', [UserController::class, 'showRegisterForm'])->name('register.form');
 Route::post('/register', [UserController::class, 'register'])->name('register');
@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
 Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function () {
     Route::get('login', [AdminController::class, 'showLoginForm']);
     Route::post('login', [AdminController::class, 'login'])->name('admin.login');
+    // In routes/web.php
+    Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
     // Add other admin routes that require authentication
     Route::middleware('auth:admin')->group(function () {
