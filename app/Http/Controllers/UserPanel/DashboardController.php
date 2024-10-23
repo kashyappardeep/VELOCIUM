@@ -109,6 +109,7 @@ class DashboardController extends Controller
             'total_business',
             'other_team_business',
             'indirectUsersCount',
+            'user_investments',
             'user_reward',
             'InvestmentHistoryCount',
             'Active_Directs',
