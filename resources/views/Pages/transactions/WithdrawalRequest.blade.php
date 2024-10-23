@@ -34,7 +34,7 @@
                             <div class="row">
                                <div class="form-group col-md-6">
                                   <label>Wallet Balance: </label>
-                                  <input value="{{$user_details->balance}}" type="text" class="form-control" maxlength="50" readonly="readonly">
+                                  <input value="{{$user_details->withdrawable}}" type="text" class="form-control" maxlength="50" readonly="readonly">
                                </div>
                             </div>
                             <div class="row">

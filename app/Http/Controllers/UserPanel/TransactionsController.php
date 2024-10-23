@@ -54,7 +54,7 @@ class TransactionsController extends Controller
             'type' => "1",
         ]);
 
-        $user->balance -= $amount;
+        $user->withdraw -= $amount;
         $user->save();
         return redirect()->back()->with('success', 'Withdrawal request sent successfully!');
     }

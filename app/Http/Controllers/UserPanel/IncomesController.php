@@ -17,11 +17,15 @@ class IncomesController extends Controller
     }
     public function DirectIncome()
     {
-        $direct_income = TransactionHistory::with('user.investmentHistory')->where('to', auth()->id())
-            ->where('type', 5)->get();
-        // dd($direct_income);
+        // Change this to paginate, e.g., 10 items per page
+        $direct_income = TransactionHistory::with('user.investmentHistory')
+            ->where('to', auth()->id())
+            ->where('type', 5)
+            ->paginate(10); // Number of items per page
+
         return view('Pages.Incomes.DirectIncome', compact('direct_income'));
     }
+
     public function LevelIncome(Request $request)
     {
         // Use pagination, e.g., 10 records per page
