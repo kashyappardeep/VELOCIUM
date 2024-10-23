@@ -80,7 +80,9 @@ class ActiveUserIdController extends Controller
                 $referrer = User::where('referal_code', $currentUser->referal_by)
                     ->where('status', 2)
                     ->first();
+
                 if ($referrer) {
+                    // dd($referrer);
                     $referrer->team_business += $user_invest->amount;
 
                     $referrer->save();
@@ -259,6 +261,9 @@ class ActiveUserIdController extends Controller
                 return redirect()->back()->with('error', 'User with the provided referral code not found.');
             }
 
+            $currentUser->status = 2;
+            $currentUser->save();
+
             // Proceed with creating the InvestmentHistory
             InvestmentHistory::create([
                 'user_id' => $currentUser->id,
@@ -267,6 +272,7 @@ class ActiveUserIdController extends Controller
                 'type' => 2,
                 'package_id' => $request->package_id,
             ]);
+
 
             return redirect()->back()->with('success', 'Dummy User Id Activate successfully!');
         } catch (\Exception $e) {
