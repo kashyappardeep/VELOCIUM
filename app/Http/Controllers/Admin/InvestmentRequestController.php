@@ -111,6 +111,7 @@ class InvestmentRequestController extends Controller
 
 
                 $direct_referrer->direct_balance += $direct;
+                $direct_referrer->withdrawable += $direct;
                 $direct_referrer->save();
                 TransactionHistory::create([
                     'to' => $direct_referrer->id,
@@ -132,6 +133,7 @@ class InvestmentRequestController extends Controller
 
                 if ($referrer) {
                     $referrer->team_business += $user_invest->amount;
+
                     $referrer->save();
                 }
 
@@ -156,7 +158,7 @@ class InvestmentRequestController extends Controller
                         // Update the referrer's wallet if their status is active
                         if ($referrer->status == 2) {
 
-
+                            $referrer->withdrawable += $bonusAmount;
                             $referrer->level_balance += $bonusAmount;
                         }
 
@@ -180,7 +182,7 @@ class InvestmentRequestController extends Controller
                                     ->get();
 
                                 $referrer->royalty_balance += $reward->reward;
-
+                                $referrer->withdrawable += $reward->reward;
                                 $referrer->save();
 
                                 if ($user_rewards->isEmpty()) {

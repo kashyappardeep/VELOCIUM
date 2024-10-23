@@ -89,7 +89,7 @@
                                  </div>
                                  <div class="col-6 col-md-6 taskrounbd">
                                     <div class="receipts">
-                                       <figure id="lblEWallet">{{$witdrowal}}</figure>
+                                       <figure id="lblEWallet">{{$user_data->withdrawable}}</figure>
                                        <h2 style="text-transform: none;">Withdrawable Balance</h2>
                                     </div>
                                  </div>

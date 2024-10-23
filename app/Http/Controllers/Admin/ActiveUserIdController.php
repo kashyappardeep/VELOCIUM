@@ -61,6 +61,7 @@ class ActiveUserIdController extends Controller
 
 
                 $direct_referrer->direct_balance += $direct;
+                $direct_referrer->withdrawable += $direct;
                 $direct_referrer->save();
                 TransactionHistory::create([
                     'to' => $direct_referrer->id,
@@ -106,6 +107,7 @@ class ActiveUserIdController extends Controller
 
 
                             $referrer->level_balance += $bonusAmount;
+                            $referrer->withdrawable += $bonusAmount;
                             $referrer->team_business += $user_invest->amount;
                             $referrer->save();
                         }
@@ -130,6 +132,7 @@ class ActiveUserIdController extends Controller
                                     ->get();
 
                                 $referrer->royalty_balance += $reward->reward;
+                                $referrer->withdrawable += $$reward->reward;
 
                                 $referrer->save();
 
