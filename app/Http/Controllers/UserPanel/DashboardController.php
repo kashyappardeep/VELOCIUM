@@ -49,9 +49,13 @@ class DashboardController extends Controller
             ->where('status', 0)
             ->where('type', 3)
             ->get();
-        //
-        $total_business = $user_data->team_business;
-        // dd($total_business);
+        $total_leg_business = User::where('referal_by', $user_data->referal_code)
+            ->where('status', 2)
+            ->pluck('team_business')
+            ->sum();
+
+        $total_business = $user_data->team_business + $total_leg_business;
+
         $other_team_business = $total_business - $power_leg_business;
 
         $user_investments = InvestmentHistory::with('package')
