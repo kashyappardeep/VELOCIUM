@@ -104,32 +104,48 @@ class InvestmentRequestController extends Controller
             $levels = Level::all();
             $rewards = Reward::all();
             $dirct_sponser = Config::first();
+
+            // Find the direct referrer (sponsor) of the current user
             $direct_referrer = User::where('referal_code', $currentUser->referal_by)
                 ->where('status', 2)
                 ->first();
-            // dd($direct_referrer);
-            $direct = $user_invest->amount * $dirct_sponser->direct_sponser / 100;
-            // dd($direct_referrer);
+
+            // Calculate the direct sponsor bonus
+            $direct_bonus = $user_invest->amount * $dirct_sponser->direct_sponser / 100;
+
             if ($direct_referrer) {
-
-
-                $direct_referrer->direct_balance += $direct;
+                // Add the direct sponsor bonus to the referrer's balance
+                $direct_referrer->direct_balance += $direct_bonus;
                 $direct_referrer->save();
+
+                // Create transaction history for the direct sponsor bonus
                 TransactionHistory::create([
                     'to' => $direct_referrer->id,
                     'by' => $currentUser->id,
-                    'amount' => $direct,
+                    'amount' => $direct_bonus,
                     'type' => "5",
                 ]);
             }
 
-            // Loop through levels to calculate bonuses
-            foreach ($levels as $level) {
-                Log::info('Check level ', ['level' => $level]);
 
-                $referrer_count = User::where('referal_by', $currentUser->referal_by)
+            // Traverse up the referral chain for all levels
+            $referrer = $currentUser;
+            Log::info('Total levels fetched', ['count' => $levels->count()]);
+
+            foreach ($levels as $level) {
+                Log::info('Processing level', ['level' => $level]);
+                // Find the referrer of the current user in the chain
+                $referrer = User::where('referal_code', $referrer->referal_by)
                     ->where('status', 2)
-                    ->count();
+                    ->first();
+
+                // If there is no referrer at this level, break out of the loop
+                if (!$referrer) {
+                    break;
+                }
+
+                // Get the count of direct referrals for the current referrer
+
                 $referrer = User::where('referal_code', $currentUser->referal_by)
                     ->where('status', 2)
                     ->first();
@@ -140,85 +156,44 @@ class InvestmentRequestController extends Controller
                     $referrer->save();
                 }
 
+                // Calculate team business for rewards
+                $power_leg_business = User::where('referal_by', $referrer->referal_code)
+                    ->where('status', 2)
+                    ->pluck('team_business')
+                    ->max();
+
+                $total_leg_business = User::where('referal_by', $referrer->referal_code)
+                    ->where('status', 2)
+                    ->pluck('team_business')
+                    ->sum();
+
+                $total_business = $referrer->team_business + $total_leg_business;
+
+                $other_team_business = $total_business - $power_leg_business;
+
+                // Process rewards if the team business qualifies
+                foreach ($rewards as $reward) {
+                    if ((int) $power_leg_business >= (int) $reward->team_business && (int) $other_team_business >= (int) $reward->team_business) {
+                        // Check if the referrer has already received the reward
+                        $reward_already_received = TransactionHistory::where('user_id', $referrer->id)
+                            ->where('reward_id', $reward->id)
+                            ->exists();
+
+                        if (!$reward_already_received) {
+                            // Add the reward to the referrer's royalty balance
 
 
-
-                if ($level->direct <= $referrer_count) {
-
-                    if ($currentUser && $currentUser->referal_by) {
-                        // Find the referrer
-
-
-                        // Check if the referrer exists
-                        if (!$referrer) {
-                            Log::warning('Referrer not found', ['referal_by' => $currentUser->referal_by]);
-                            break; // Exit the loop if referrer is not found
+                            // Record the reward in the transaction history
+                            TransactionHistory::create([
+                                'user_id' => $referrer->id,
+                                'amount' => $reward->reward,
+                                'reward_id' => $reward->id,
+                                'type' => "3",
+                            ]);
                         }
-
-                        // Calculate the bonus amount
-                        $bonusAmount = $user_invest->amount * $level->level_per / 100;
-                        Log::info('Bonus Amount Calculated', ['bonusAmount' => $bonusAmount]);
-
-                        // Update the referrer's wallet if their status is active
-                        if ($referrer->status == 2) {
-
-                            $referrer->level_balance += $bonusAmount;
-                        }
-
-                        // Calculate team business
-                        $power_leg_business = User::where('referal_by', $referrer->referal_code)
-                            ->where('status', 2)
-                            ->pluck('team_business')
-                            ->max();
-
-                        $total_business = User::where('referal_by', $referrer->referal_code)
-                            ->where('status', 2)
-                            ->sum('team_business');
-                        $other_team_business = $total_business - $power_leg_business;
-
-                        // Create a transaction history record for rewards
-                        foreach ($rewards as $reward) {
-                            Log::info('Check rewards ', ['reward' => $reward->team_business]);
-                            if ($power_leg_business >= $reward->team_business && $other_team_business >= $reward->team_business) {
-                                $user_rewards = TransactionHistory::where('user_id', $referrer->id)
-                                    ->where('reward_id', $reward->id)
-                                    ->get();
-
-                                $referrer->royalty_balance += $reward->reward;
-                                $referrer->save();
-
-                                if ($user_rewards->isEmpty()) {
-                                    TransactionHistory::create([
-                                        'user_id' => $referrer->id,
-                                        'amount' => $reward->reward,
-                                        'reward_id' => $reward->id,
-                                        'type' => "3",
-                                    ]);
-                                }
-                            }
-                        }
-
-                        // Create the transaction history record
-                        TransactionHistory::create([
-                            'amount' => $bonusAmount,
-                            'level' => $level->level_name,
-                            'type' => "2",
-                            'to' => $referrer->id,
-                            'by' => $currentUser->id,
-                        ]);
-
-                        Log::info('Transaction History Created', ['referrer_id' => $referrer->id, 'bonusAmount' => $bonusAmount]);
-
-                        // Move up to the next referrer (if any)
-                        $currentUser = $referrer;
                     }
-                } else {
-                    Log::warning('Referrer not found or currentUser is invalid', ['currentUser' => $currentUser]);
-                    break;
                 }
             }
-
-
             $currentUser->status = 2;
             $user_invest->status = 2;
 

@@ -19,6 +19,7 @@ class TransactionHistory extends Model
         'reward_id',
         'to',
         'by',
+        'cred_date',
         'level',
         'Direct',
     ];

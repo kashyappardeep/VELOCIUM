@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('/claimDaily', [ActivateController::class, 'claimDaily'])->name('claimDaily');
+    Route::get('/level_income', [ActivateController::class, 'level_income'])->name('level_income');
+    Route::get('/getIndirectReferrals', [DashboardController::class, 'getIndirectReferrals'])->name('getIndirectReferrals');
 
 
     // Resource routes with 'auth' middleware

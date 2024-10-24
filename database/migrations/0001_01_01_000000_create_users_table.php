@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('staking_balance', 8, 2)->nullable();
             $table->integer('direct_balance')->nullable(); // Corrected from 'intedecimalger'
             $table->decimal('level_balance', 8, 2)->nullable();
+            $table->decimal('total_investment', 8, 2)->nullable();
             $table->decimal('royalty_balance', 8, 2)->nullable();
             $table->decimal('team_business', 8, 2)->nullable();
             $table->string('gender')->nullable();

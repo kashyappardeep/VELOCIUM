@@ -194,7 +194,7 @@
                               <table id="tblMyEarning" class="tblJobOrderItem">
                                  <tr>
                                     <th style="width: 80px;" class="tdjobid">Staking Income</th>
-                                    <th style="width: 100px; text-align: right;" id="tdROIIncome">0.00</th>
+                                    <th style="width: 100px; text-align: right;" id="tdROIIncome">{{$user_data->staking_balance}}</th>
                                  </tr>
                                  
                                  <tr>
