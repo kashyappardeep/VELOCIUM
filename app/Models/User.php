@@ -27,6 +27,7 @@ class User extends Authenticatable
         'direct_balance',
         'level_balance',
         'royalty_balance',
+        'total_investment',
         'password',
         'referal_code',
         'referal_by',

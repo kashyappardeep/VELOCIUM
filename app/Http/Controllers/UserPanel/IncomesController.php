@@ -13,7 +13,11 @@ class IncomesController extends Controller
      */
     public function index()
     {
-        return view('Pages.Incomes.ReportROI');
+        $direct_income = TransactionHistory::with('user.investmentHistory')
+            ->where('user_id', auth()->id())
+            ->where('type', 4)
+            ->paginate(10);
+        return view('Pages.Incomes.ReportROI', compact('direct_income'));
     }
     public function DirectIncome()
     {

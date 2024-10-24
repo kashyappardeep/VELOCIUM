@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Packages;
+use App\Models\Reward;
 use App\Models\InvestmentHistory;
 use App\Models\TransactionHistory;
 
@@ -36,10 +37,6 @@ class DashboardController extends Controller
             ->where('status', 0)
             ->sum('amount');
 
-
-
-
-
         $power_leg_business = User::where('referal_by', $user_data->referal_code)
             ->where('status', 2)
             ->pluck('team_business')
@@ -57,6 +54,28 @@ class DashboardController extends Controller
         $total_business = $user_data->team_business + $total_leg_business;
 
         $other_team_business = $total_business - $power_leg_business;
+        $rewards = Reward::get();
+        foreach ($rewards as $reward) {
+            if ((int) $power_leg_business >= (int) $reward->team_business && (int) $other_team_business >= (int) $reward->team_business) {
+                // Check if the referrer has already received the reward
+                $reward_already_received = TransactionHistory::where('user_id', auth()->id())
+                    ->where('reward_id', $reward->id)
+                    ->exists();
+
+                if (!$reward_already_received) {
+                    // Add the reward to the referrer's royalty balance
+
+
+                    // Record the reward in the transaction history
+                    TransactionHistory::create([
+                        'user_id' => auth()->id(),
+                        'amount' => $reward->reward,
+                        'reward_id' => $reward->id,
+                        'type' => "3",
+                    ]);
+                }
+            }
+        }
 
         $user_investments = InvestmentHistory::with('package')
             ->where('user_id', auth()->id())
