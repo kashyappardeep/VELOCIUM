@@ -6,7 +6,7 @@
             <div class="card smallPageHeader">
                 <div class="card-header">
                     <div class="divPageTitle">
-                        <h5>Activate/Upgrade User ID</h5>
+                        <h5>Activate/Upgrade User Dummy ID</h5>
                         <div class="btnRight"></div>
                         <div class="clearfix"></div>
                        
