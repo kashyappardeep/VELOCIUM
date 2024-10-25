@@ -40,7 +40,7 @@
                                                         <td style="text-align: center;">{{ $income->created_at }}</td>
                                                         <td style="text-align: center;">{{ $income->user->referal_code }}</td>
                                                         <td style="text-align: center;">{{ $income->amount }}</td>
-                                                        <td style="text-align: center;">{{ $income->level }}</td>
+                                                        <td style="text-align: center;">Level {{ $income->level }}</td>
                                                     </tr>
                                                     @endforeach
                                                 @else

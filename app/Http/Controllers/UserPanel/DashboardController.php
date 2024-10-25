@@ -79,10 +79,7 @@ class DashboardController extends Controller
             ->where('user_id', auth()->id())
             ->where('status', 2)
             ->get();
-        $witdrowal = TransactionHistory::where('user_id', auth()->id())->where('type', 1)
-            ->where('status', 1)
-            ->sum('amount');
-        // dd($witdrowal);
+        $witdrowal = $user_data->withdrawable;
         $total_daily_roi = 0;
         $Balance_Earning = 0 - $witdrowal;
         foreach ($user_investments as $investment) {

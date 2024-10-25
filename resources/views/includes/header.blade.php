@@ -213,7 +213,7 @@
                      <ul class="sub-menu collapse" id="Network">
                         <li><a href="{{ route('Network.index') }}">Direct Team</a> </li>
                         <li><a href="{{ route('TeamList') }}">Team List</a> </li>
-                        <li><a href="{{ route('LevelTree') }}">My Tree</a> </li>
+                        {{-- <li><a href="{{ route('LevelTree') }}">My Tree</a> </li> --}}
                      </ul>
                   </li>
                   <li data-toggle="collapse" data-target="#Registration" class="collapsed">
