@@ -41,6 +41,7 @@ class ActiveUserIdController extends Controller
             // Get the current user making the investment
             $currentUser = User::where('referal_code', $request->user_id)->first();
             $currentUser->total_investment += $user_invest->amount;
+            $currentUser->team_business += $user_invest->amount;
             $currentUser->status = 2;
             $currentUser->save();
             // Record the investment in the InvestmentHistory table
@@ -164,6 +165,9 @@ class ActiveUserIdController extends Controller
             }
 
             $currentUser->status = 2;
+            $currentUser->total_investment = $user_invest->amount;
+            $currentUser->team_business += $user_invest->amount;
+            $currentUser->type = 2;
             $currentUser->save();
 
             // Proceed with creating the InvestmentHistory

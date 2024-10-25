@@ -4,6 +4,8 @@ namespace App\Http\Controllers\UserPanel;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\Models\User;
 use App\Models\TransactionHistory;
 
@@ -97,45 +99,72 @@ class NetworkController extends Controller
     public function TeamList(Request $request)
     {
         $user_data = User::where('id', auth()->id())->first();
+        $selectedLevel = $request->input('level', 1);
 
-        // Get the selected level from the request (default to 0 for 'All')
-        $selectedLevel = $request->input('level', 0);
-
-        // Initialize an array to store the users at each level
+        // Initialize collection to store all users
         $allUsers = collect();
 
-        // Start with the current user's referral code
+        // Start with the user's referral code
         $currentReferalCodes = collect([$user_data->referal_code]);
 
-        // Loop for 20 levels deep
+        // Loop through levels up to the max level (20) or requested level
         for ($i = 1; $i <= 20; $i++) {
             $users = User::whereIn('referal_by', $currentReferalCodes)->get();
 
             if ($users->isEmpty()) {
-                break; // Stop if no more users are found
+                break; // Stop if there are no users at this level
             }
 
-            // Add found users to the overall collection
+            // Assign the level to each user for display purposes
+            $users->each->setAttribute('level', $i);
             $allUsers = $allUsers->merge($users);
 
-            // Prepare for the next level: get referral codes of the current level users
+            // Prepare referral codes for the next level
             $currentReferalCodes = $users->pluck('referal_code');
 
-            // If a specific level is selected, only store and return that level's users
             if ($selectedLevel == $i) {
+                // Paginate users at the specific selected level
+                $paginatedUsers = $this->paginateCollection($users, 10); // 10 items per page
                 return view('Pages.network.TeamList', [
-                    'allUsers' => $users, // Only pass users at the selected level
-                    'selectedLevel' => $selectedLevel // Pass the selected level to the view
+                    'allUsers' => $paginatedUsers,
+                    'selectedLevel' => $selectedLevel,
                 ]);
             }
         }
 
-        // If 'All' is selected (level 0), pass all users
+        // Paginate all users if 'All' levels are selected
+        $paginatedAllUsers = $this->paginateCollection($allUsers, 10); // 10 items per page
         return view('Pages.network.TeamList', [
-            'allUsers' => $allUsers,
-            'selectedLevel' => $selectedLevel // Pass the selected level to the view
+            'allUsers' => $paginatedAllUsers,
+            'selectedLevel' => $selectedLevel
         ]);
     }
+
+    /**
+     * Paginate a Collection manually.
+     *
+     * @param Collection $collection
+     * @param int $perPage
+     * @return LengthAwarePaginator
+     */
+    private function paginateCollection(Collection $collection, $perPage)
+    {
+        $page = request()->input('page', 1);
+
+        // Calculate the total number of items
+        $total = $collection->count();
+
+        // Slice the collection to get the items for the current page
+        $results = $collection->slice(($page - 1) * $perPage, $perPage)->values();
+
+        // Create a LengthAwarePaginator instance
+        return new LengthAwarePaginator($results, $total, $perPage, $page, [
+            'path' => request()->url(),      // Current URL
+            'query' => request()->query(),    // Query parameters
+        ]);
+    }
+
+
 
 
     public function LevelTree()

@@ -24,9 +24,7 @@ class DashboardController extends Controller
         $InvestmentHistoryCount = InvestmentHistory::where('user_id', auth()->id())
             ->where('status', 2)
             ->count();
-        $total_investment = InvestmentHistory::where('user_id', auth()->id())
-            ->where('status', 2)
-            ->sum('amount');
+
         // dd($total_investment);
 
         $Active_Directs = User::where('referal_by', $user_data->referal_code)->where('status', 2)
@@ -41,7 +39,7 @@ class DashboardController extends Controller
             ->where('status', 2)
             ->pluck('team_business')
             ->max();
-        // dd($power_leg_business);
+
         $user_reward = TransactionHistory::where('user_id', auth()->id())
             ->where('status', 0)
             ->where('type', 3)
@@ -50,10 +48,10 @@ class DashboardController extends Controller
             ->where('status', 2)
             ->pluck('team_business')
             ->sum();
+        // dd($power_leg_business);
+        $total_business = $total_leg_business;
 
-        $total_business = $user_data->team_business + $total_leg_business;
-
-        $other_team_business = $total_business - $power_leg_business;
+        $other_team_business = $total_leg_business - $power_leg_business;
         $rewards = Reward::get();
         foreach ($rewards as $reward) {
             if ((int) $power_leg_business >= (int) $reward->team_business && (int) $other_team_business >= (int) $reward->team_business) {
@@ -122,7 +120,6 @@ class DashboardController extends Controller
             'witdrowal',
             'max_day_roi',
             'total_daily_roi',
-            'total_investment',
             'pending_reward',
             'power_leg_business',
             'total_business',

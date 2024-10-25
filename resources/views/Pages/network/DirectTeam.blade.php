@@ -49,7 +49,11 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="dataTables_info" id="tbldata_info" role="status" aria-live="polite">Showing {{ $DirectTeam->firstItem() }} to {{ $DirectTeam->lastItem() }} of {{ $DirectTeam->total() }} entries</div>
+                                <div class="dataTables_info" id="tbldata_info" role="status" 
+                                aria-live="polite">Showing {{ $DirectTeam->firstItem() }}
+                                 to {{ $DirectTeam->lastItem() }} of {{ $DirectTeam->total() }} 
+                                 entries
+                                </div>
                                 <div class="dataTables_paginate paging_simple_numbers" id="tbldata_paginate">
                                     {{ $DirectTeam->links('pagination::bootstrap-4') }}
                                 </div>

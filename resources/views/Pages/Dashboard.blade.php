@@ -106,7 +106,7 @@
                               <table class="tblJobOrderItem">
                                  <tr>
                                     <th class="tdjobid">USDT Stake</th>
-                                    <th style="width: 80px; text-align: right;" id="lblStaking">{{$total_investment}}</th>
+                                    <th style="width: 80px; text-align: right;" id="lblStaking">{{$user_data->total_investment}}</th>
                                  </tr>
                                  <tr>
                                     <th class="tdjobid">Daily Earning</th>

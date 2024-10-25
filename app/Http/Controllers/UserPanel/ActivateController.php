@@ -57,7 +57,7 @@ class ActivateController extends Controller
             ]);
             // dd(auth()->id());
 
-            $user->activation_balance -= $Packages_detals;
+            $user->activation_balance -= $Packages_detals->amount;
             $user->save();
             return redirect()->back()->with('success', 'Package activated successfully!');
         } catch (\Exception $e) {
