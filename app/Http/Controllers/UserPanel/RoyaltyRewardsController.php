@@ -16,6 +16,7 @@ class RoyaltyRewardsController extends Controller
         // dd($Reward);
         return view('Pages.Royalty', compact('Reward'));
     }
+
     public function claimReward(TransactionHistory $reward)
     {
         // Ensure the reward belongs to the logged-in user and hasn't been claimed yet
