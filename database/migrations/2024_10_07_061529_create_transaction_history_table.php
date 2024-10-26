@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('type')->comment("1=>withdraw,2=>Referred,3=>reward,4 =>ROI,5=>Direct ");
             $table->foreignId('reward_id')->nullable();
             $table->string('cred_date')->nullable();
+            $table->string('withdrawal_address')->nullable();
             $table->string('level')->nullable();
             $table->timestamps();
         });

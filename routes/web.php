@@ -12,6 +12,7 @@ use App\Http\Controllers\UserPanel\IncomesController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\InvestmentRequestController;
 use App\Http\Controllers\Admin\AddFundController;
+use App\Http\Controllers\Admin\WithdrawalRequestController;
 use App\Http\Controllers\Admin\ActiveUserIdController;
 
 // Public routes
@@ -72,9 +73,13 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::put('/activation_user', [ActiveUserIdController::class, 'activation_user'])->name('activation_user');
         Route::get('/dummy_id', [ActiveUserIdController::class, 'dummy_id'])->name('dummy_id');
         Route::put('/active_dummy_id', [ActiveUserIdController::class, 'active_dummy_id'])->name('active_dummy_id');
+        Route::get('/show_all_user', [AdminController::class, 'show_all_user'])->name('admin.show_all_user');
+        // routes/web.php
+        Route::post('/payout-closing', [AdminController::class, 'payoutClosing'])->name('payout.closing');
 
         Route::resource('invest_req', InvestmentRequestController::class);
         Route::resource('addfund', AddFundController::class);
         Route::resource('active_user_id', ActiveUserIdController::class);
+        Route::resource('withdrawal_requests', WithdrawalRequestController::class);
     });
 });

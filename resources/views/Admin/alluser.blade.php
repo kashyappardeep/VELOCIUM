@@ -1,4 +1,4 @@
-@include('includes.header');
+@include('layouts.header');
 
 <div class="content">
     <div class="row">
@@ -8,7 +8,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <h5 class="card-title" id="pagetitle">My Direct Team</h5>
+                    <h5 class="card-title" id="pagetitle">All User List</h5>
                 </div>
                 <div class="card-body form_design">
                     <div class="row">
@@ -27,7 +27,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach($DirectTeam as $user)
+                                                @foreach($alluser as $user)
                                                 <tr>
                                                     <td>{{$user->referal_code}}</td>
                                                     <td>{{$user->name}}</td>
@@ -51,12 +51,12 @@
                                     </div>
                                 </div>
                                 <div class="dataTables_info" id="tbldata_info" role="status" 
-                                aria-live="polite">Showing {{ $DirectTeam->firstItem() }}
-                                 to {{ $DirectTeam->lastItem() }} of {{ $DirectTeam->total() }} 
+                                aria-live="polite">Showing {{ $alluser->firstItem() }}
+                                 to {{ $alluser->lastItem() }} of {{ $alluser->total() }} 
                                  entries
                                 </div>
                                 <div class="dataTables_paginate paging_simple_numbers" id="tbldata_paginate">
-                                    {{ $DirectTeam->links('pagination::bootstrap-4') }}
+                                    {{ $alluser->links('pagination::bootstrap-4') }}
                                 </div>
                             </div>
                         </div>
@@ -71,4 +71,4 @@
     <script src="UserJs/Network/DirectTeam.js?version=17082022"></script>
 </div>
 
-@include('includes.footer');
+@include('layouts.footer');

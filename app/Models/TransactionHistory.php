@@ -20,6 +20,7 @@ class TransactionHistory extends Model
         'to',
         'by',
         'cred_date',
+        'withdrawal_address',
         'level',
         'Direct',
     ];
@@ -27,6 +28,10 @@ class TransactionHistory extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'by', 'id'); // The user who made the transaction
+    }
+    public function user_req()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id'); // The user who made the transaction
     }
 
     public function referral()

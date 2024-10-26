@@ -59,7 +59,7 @@ class ActiveUserIdController extends Controller
 
                 $sponsorUser = User::where('referal_code', $sponsor)->first();
 
-                if ($sponsorUser->referal_code == 'parent') {
+                if ($sponsorUser->referal_code == 'VEL0008') {
                     Log::info("No sponsor found for User ID {$currentUser->id}. Stopping the loop.");
                     break; // Exit the loop if no sponsor is found
                 }
