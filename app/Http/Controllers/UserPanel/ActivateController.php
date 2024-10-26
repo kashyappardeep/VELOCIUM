@@ -72,10 +72,13 @@ class ActivateController extends Controller
         $currentDate = Carbon::now();
 
         $users = User::whereHas('investmentHistory', function ($query) {
-            $query->where('status', 2); // Only include users with active investments
+            $query->where('status', 2)
+                ->where('type', 1); // Only include users with active investments
         })->get();
 
         foreach ($users as $user) {
+            Log::info("Active user  {$user->id}");
+
             $lastClaim = TransactionHistory::where('user_id', $user->id)
                 ->where('type', 4)
                 ->latest()

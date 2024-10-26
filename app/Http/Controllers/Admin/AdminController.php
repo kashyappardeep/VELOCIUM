@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\User;
+use App\Models\TransactionHistory;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -52,7 +54,84 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        return view('Admin.Dashboard');
+        $oneMonthAgo = Carbon::now()->subMonth();
+
+        // Monthly sums for the last month
+        $monthlyInvestmentSum = User::where('created_at', '>=', $oneMonthAgo)
+            ->sum('total_investment');
+
+        $monthlyPayOutSum = User::where('created_at', '>=', $oneMonthAgo)
+            ->sum('withdrawable');
+
+        // Active users within the last month
+        $activeUserCount = User::where('status', 2)
+            ->where('created_at', '>=', $oneMonthAgo)
+            ->count();
+
+        // Total investment sum overall (not limited to the last month)
+        $totalInvestmentSum = User::sum('total_investment');
+
+        // Total payout for transactions of type 1 with status 2 in the last month
+        $totalpayout = TransactionHistory::where('type', 1)
+            ->where('status', 2)
+            ->where('created_at', '>=', $oneMonthAgo) // Ensure this line to filter by last month
+            ->sum('amount');
+
+        // Total withdrawable sum from all users (not limited to the last month)
+        $totalwithdralSum = User::sum('staking_balance')
+            + User::sum('direct_balance')
+            + User::sum('level_balance')
+            + User::sum('royalty_balance');
+
+        // Inactive users within the last month
+        $inactiveUserCount = User::where('status', 0)
+            ->where('created_at', '>=', $oneMonthAgo)
+            ->count();
+
+        // Total user count (not limited to the last month)
+        $totalUserCount = User::count();
+
+        return view('Admin.Dashboard', compact(
+            'monthlyInvestmentSum',
+            'activeUserCount',
+            'totalpayout',
+            'totalwithdralSum',
+            'totalInvestmentSum',
+            'inactiveUserCount',
+            'totalUserCount',
+            'monthlyPayOutSum'
+        ));
+    }
+
+    public function payoutClosing()
+    {
+        $users = User::all();
+
+        foreach ($users as $user) {
+            // Calculate the total balance for the user
+            $totalBalance = $user->staking_balance
+                + $user->direct_balance
+                + $user->level_balance
+                + $user->royalty_balance;
+            // dd($totalBalance);
+            // Update the user's withdrawable balance and reset individual balances
+            $user->update([
+                'withdrawable' => $user->withdrawable + $totalBalance, // Increment withdrawable
+                'staking_balance' => 0, // Reset balances
+                'direct_balance' => 0,
+                'level_balance' => 0,
+                'royalty_balance' => 0,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Payouts have been closed, and balances reset.');
+    }
+
+
+    public function show_all_user()
+    {
+        $alluser = User::paginate(10);
+        return view('Admin.alluser', compact('alluser'));
     }
     public function logout(Request $request)
     {

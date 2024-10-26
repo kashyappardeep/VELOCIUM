@@ -44,9 +44,8 @@
                                             <td>{{ $user->referal_code }}</td>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->investmentHistory->isNotEmpty() ? $user->investmentHistory->sum('amount') : '0' }}</td>
-                                            <td style="{{ $user->status == 1 ? 'color: Yellow' : 'color: rgb(27, 232, 27)' }}">
-                                                {{ $user->status == 1 ? 'Pending' : 'Active' }}
-                                            </td>
+                                            <td style="{{ $user->status == 0 ? 'color: rgb(247, 19, 19)' : 'color: rgb(27, 232, 27)' }}">
+                                                {{ $user->status == 0 ? 'InActive' : 'Active' }}</td>
                                             <td>{{ $user->created_at }}</td>
                                             <td>Level {{ $user->level ?? 'N/A' }}</td>
                                         </tr>

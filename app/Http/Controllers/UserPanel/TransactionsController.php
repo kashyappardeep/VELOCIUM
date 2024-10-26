@@ -31,12 +31,15 @@ class TransactionsController extends Controller
 
     public function WithdrawalHistory()
     {
-        $histroy = TransactionHistory::where('user_id', auth()->id())
-            ->where('type', 1)->get();
-        return view('Pages.transactions.WithdrawalHistory', compact('histroy'));
+        $history = TransactionHistory::where('user_id', auth()->id())
+            ->where('type', 1)
+            ->paginate(10); // Adjust the number per page as desired
+        return view('Pages.transactions.WithdrawalHistory', compact('history'));
     }
+
     public function withdraw(Request $request)
     {
+        // dd($request->all());
         $user = User::where('id', auth()->id())->first();
         $amount = $request->usdt_amount;
         if ($amount <= 20) {
@@ -47,15 +50,16 @@ class TransactionsController extends Controller
             // Redirect back with an error message for insufficient balance
             return redirect()->back()->with('error', 'Insufficient balance for this withdrawal request.');
         }
-
+        $user->withdrawable -= $amount;
+        $user->save();
         $TransactionHistory = TransactionHistory::create([
             'user_id' => $user->id,
             'amount' => $amount,
             'type' => "1",
+            'withdrawal_address' => $request->address,
         ]);
 
-        $user->withdraw -= $amount;
-        $user->save();
+
         return redirect()->back()->with('success', 'Withdrawal request sent successfully!');
     }
     public function TransactionSummary()

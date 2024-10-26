@@ -194,6 +194,15 @@
                         <p>Dashboard</p>
                      </a>
                   </li>
+                  <li data-toggle="collapse" data-target="#Report" class="collapsed">
+                     <a><i class="fa fa-users">
+                     </i>All User</a>
+                     <ul class="sub-menu collapse" id="Report">
+                        <li><a href="{{route('admin.show_all_user')}}">User List</a></li>
+                    
+                        
+                      </ul>
+                  </li>
                   <li data-toggle="collapse" data-target="#Profile" class="collapsed">
                      <a><i class="fa fa-vcard"></i>Investment Request</a>
                      <ul class="sub-menu collapse" id="Profile">
@@ -215,6 +224,14 @@
                      <ul class="sub-menu collapse" id="Registration">
                         <li><a href="{{route('active_user_id.index')}}">Active User ID</a> </li>
                         <li><a href="{{ route('dummy_id') }}">Dummy User ID</a> </li>
+                     </ul>
+                  </li>
+                  <li data-toggle="collapse" data-target="#TransactionSwap" class="collapsed">
+                     <a><i class="fa fa-vcard"></i>Withdrawal Request</a>
+                     <ul class="sub-menu collapse" id="TransactionSwap">
+                        <li><a href="{{route('withdrawal_requests.index')}}">Pending</a> </li>
+                        {{-- <li><a href="{{route('withdrawal_requests.active')}}">Active</a> </li>
+                        <li><a href="{{route('withdrawal_requests.reject')}}">Reject</a> </li> --}}
                      </ul>
                   </li>
                  
