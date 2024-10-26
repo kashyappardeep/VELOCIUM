@@ -29,7 +29,7 @@
                                          <td>
                                             @if($item->status == 0)
                                                 <span style="color: Yellow">Pending</span>
-                                            @elseif($item->status == 1)
+                                            @elseif($item->status == 2)
                                                 <span style="color: rgb(27, 232, 27)">Complete</span>
                                             @else
                                                 <span style="color: rgb(247, 19, 19)">Reject</span>
