@@ -49,7 +49,7 @@ class ActiveUserIdController extends Controller
                 'user_id' => $currentUser->id,
                 'amount' => $user_invest->amount,
                 'status' => 2,
-                'type' => 2,
+                'type' => 1,
                 'package_id' => $request->package_id,
             ]);
             $config = Config::first();
