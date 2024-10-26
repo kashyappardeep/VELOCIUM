@@ -76,7 +76,7 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::get('/show_all_user', [AdminController::class, 'show_all_user'])->name('admin.show_all_user');
         // routes/web.php
         Route::post('/payout-closing', [AdminController::class, 'payoutClosing'])->name('payout.closing');
-
+        Route::put('/withdraw/accept/{id}', [WithdrawalRequestController::class, 'acceptWithdrawRequest'])->name('accept_withdraw_req');
         Route::resource('invest_req', InvestmentRequestController::class);
         Route::resource('addfund', AddFundController::class);
         Route::resource('active_user_id', ActiveUserIdController::class);

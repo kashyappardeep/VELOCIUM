@@ -31,19 +31,13 @@
                                                 <tr>
                                                     <td>{{$user->referal_code}}</td>
                                                     <td>{{$user->name}}</td>
-                                                    @if($user->investmentHistory->isNotEmpty())
-                                                        @php
-                                                        $totalAmount = $user->investmentHistory->sum('amount');
-                                                        @endphp
-                                                        <td>{{$totalAmount}}</td>
+                                                    
+                                                      
+                                                        <td>{{$user->total_investment}}</td>
                                                         <td style="{{ $user->status == 0 ? 'color: rgb(247, 19, 19)' : 'color: rgb(27, 232, 27)' }}">
                                                             {{ $user->status == 0 ? 'InActive' : 'Active' }}</td>
                                                         <td>{{$user->created_at}}</td>
-                                                    @else
-                                                        <td>0</td>
-                                                        <td style="color: rgb(247, 19, 19)">Inactive</td>
-                                                        <td>----</td>
-                                                    @endif
+                                                   
                                                 </tr>
                                                 @endforeach
                                             </tbody>

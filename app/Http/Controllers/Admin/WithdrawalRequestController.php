@@ -18,6 +18,23 @@ class WithdrawalRequestController extends Controller
         return view('Admin.withdraw.index', compact('withdral_req'));
     }
 
+    public function acceptWithdrawRequest($id)
+    {
+        // Find the withdrawal request by ID
+        $withdrawRequest = TransactionHistory::find($id);
+        // dd($withdrawRequest);
+        if ($withdrawRequest && $withdrawRequest->status == 0) {
+            // Update the status to "accepted" (assuming 1 means accepted)
+            $withdrawRequest->status = 2;
+            $withdrawRequest->save();
+
+            // Return a success message
+            return redirect()->back()->with('success', 'Withdrawal request accepted successfully.');
+        }
+
+        // Return an error message if the request doesn't exist or is already accepted
+        return redirect()->back()->with('error', 'Invalid request or it has already been processed.');
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -56,7 +73,22 @@ class WithdrawalRequestController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $withdrawRequest = TransactionHistory::find($id);
+        $user = User::find($withdrawRequest->user_id);
+
+        if ($withdrawRequest && $withdrawRequest->status == 0) {
+            // Update the status to "accepted" (assuming 1 means accepted)
+            $withdrawRequest->status = 3;
+            $user->withdrawable += $withdrawRequest->amount;
+            $withdrawRequest->save();
+            $user->save();
+
+            // Return a success message
+            return redirect()->back()->with('success', 'Withdrawal request Rejected successfully.');
+        }
+
+        // Return an error message if the request doesn't exist or is already accepted
+        return redirect()->back()->with('error', 'Invalid request or it has already been processed.');
     }
 
     /**
