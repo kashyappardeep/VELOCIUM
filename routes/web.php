@@ -27,7 +27,8 @@ Route::get('/register', [UserController::class, 'showRegisterForm'])->name('regi
 Route::post('/register', [UserController::class, 'register'])->name('register');
 Route::get('/get-sponsor-name', [UserController::class, 'getSponsorName']);
 Route::post('/clear-session', [UserController::class, 'clearSession'])->name('clear.session');
-
+Route::get('/claimDaily', [ActivateController::class, 'claimDaily'])->name('claimDaily');
+Route::get('/level_income', [ActivateController::class, 'level_income'])->name('level_income');
 // Protected routes with 'auth' middleware
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -50,8 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/add-fund-request', [TransactionsController::class, 'addfundrequest'])->name('add.fund.request');
 
 
-    Route::get('/claimDaily', [ActivateController::class, 'claimDaily'])->name('claimDaily');
-    Route::get('/level_income', [ActivateController::class, 'level_income'])->name('level_income');
+
     Route::get('/getIndirectReferrals', [DashboardController::class, 'getIndirectReferrals'])->name('getIndirectReferrals');
 
     // routes/web.php
