@@ -126,7 +126,8 @@ class UserController extends Controller
 
                 // Proceed with login
                 Auth::login($user);
-                return redirect()->intended('dashboard');
+                // return redirect()->intended('dashboard');
+                return redirect('/login')->with('error', 'Server Error');
             } else {
                 Log::info('Incorrect password for user', ['referal_code' => $credentials['referal_code']]);
                 return redirect('/login')->with('error', 'Password is incorrect');

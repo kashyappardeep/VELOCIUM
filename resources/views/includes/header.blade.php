@@ -23,6 +23,8 @@
       <link href="assets/css/paper-dashboard.css?version=3072023" rel="stylesheet" />
       <link href="assets/css/Custom.css?version=04112022" rel="stylesheet" />
       <link href="assets/css/search.css" rel="stylesheet" />
+      <meta name="csrf-token" content="{{ csrf_token() }}">
+
       <script src="assets/js/jquery-3.2.1.min.js"></script>
       <script src="assets/js/core/popper.min.js"></script>
       <script src="assets/js/core/bootstrap.min.js"></script>
@@ -204,7 +206,7 @@
                      <a><i class="fa fa-vcard"></i>Profile</a>
                      <ul class="sub-menu collapse" id="Profile">
                         <li><a href="{{ route('profile.index') }}">Update Profile</a> </li>
-                        <li><a href="{{ route('UploadDocument') }}">KYC Verification</a> </li>
+                        <li><a href="{{ route('UploadDocument.index') }}">KYC Verification</a> </li>
                      </ul>
                   </li>
                   <li data-toggle="collapse" data-target="#Network" class="collapsed">

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserPanel\DashboardController;
 use App\Http\Controllers\UserPanel\ProfileController;
@@ -9,11 +10,13 @@ use App\Http\Controllers\UserPanel\ActivateController;
 use App\Http\Controllers\UserPanel\TransactionsController;
 use App\Http\Controllers\UserPanel\RoyaltyRewardsController;
 use App\Http\Controllers\UserPanel\IncomesController;
+use App\Http\Controllers\UserPanel\WalletAddressController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\InvestmentRequestController;
 use App\Http\Controllers\Admin\AddFundController;
 use App\Http\Controllers\Admin\WithdrawalRequestController;
 use App\Http\Controllers\Admin\ActiveUserIdController;
+use App\Mail\OtpMail;
 
 // Public routes
 Route::get('/', [UserController::class, 'index']);
@@ -28,7 +31,7 @@ Route::post('/clear-session', [UserController::class, 'clearSession'])->name('cl
 // Protected routes with 'auth' middleware
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/UploadDocument', [ProfileController::class, 'UploadDocument'])->name('UploadDocument');
+    // Route::get('/UploadDocument', [ProfileController::class, 'UploadDocument'])->name('UploadDocument');
     Route::get('/TeamList', [NetworkController::class, 'TeamList'])->name('TeamList');
     Route::get('/LevelTree', [NetworkController::class, 'LevelTree'])->name('LevelTree');
     Route::get('/WithdrawalRequest', [TransactionsController::class, 'index'])->name('WithdrawalRequest');
@@ -51,9 +54,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/level_income', [ActivateController::class, 'level_income'])->name('level_income');
     Route::get('/getIndirectReferrals', [DashboardController::class, 'getIndirectReferrals'])->name('getIndirectReferrals');
 
+    // routes/web.php
+    Route::post('/request-otp', [WalletAddressController::class, 'requestOtp'])->name('request-otp');
+
+    Route::post('/validate-otp', [WalletAddressController::class, 'validateOtp']);
+
 
     // Resource routes with 'auth' middleware
     Route::resource('profile', ProfileController::class);
+    Route::resource('UploadDocument', WalletAddressController::class);
     Route::resource('Network', NetworkController::class);
     Route::resource('Activate', ActivateController::class);
 });
