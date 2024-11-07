@@ -29,8 +29,10 @@ return new class extends Migration
             $table->decimal('royalty_balance', 8, 2)->nullable();
             $table->decimal('team_business', 8, 2)->nullable();
             $table->string('gender')->nullable();
+
             $table->integer('status')->default(0)->comment("0 => inactive, 1 => active");
             $table->string('password');
+            $table->string('wallet_address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

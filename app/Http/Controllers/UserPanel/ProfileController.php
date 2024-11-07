@@ -17,10 +17,10 @@ class ProfileController extends Controller
         // dd($user_detail);
         return view('Pages.profile.index', compact('user_detail'));
     }
-    public function UploadDocument()
-    {
-        return view('Pages.profile.UploadDocument');
-    }
+    // public function UploadDocument()
+    // {
+    //     return view('Pages.profile.UploadDocument');
+    // }
 
 
     /**

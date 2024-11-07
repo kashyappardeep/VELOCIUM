@@ -28,6 +28,7 @@ class User extends Authenticatable
         'level_balance',
         'royalty_balance',
         'total_investment',
+        'wallet_address',
         'password',
         'referal_code',
         'referal_by',
