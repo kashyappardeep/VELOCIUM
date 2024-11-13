@@ -50,13 +50,18 @@ class TransactionsController extends Controller
             // Redirect back with an error message for insufficient balance
             return redirect()->back()->with('error', 'Insufficient balance for this withdrawal request.');
         }
+
+        if ($user->wallet_address == null) {
+            // Redirect back with a success message
+            return redirect()->back()->with('error', 'Pleser Complete KYC Verification');
+        }
         $user->withdrawable -= $amount;
         $user->save();
         $TransactionHistory = TransactionHistory::create([
             'user_id' => $user->id,
             'amount' => $amount,
             'type' => "1",
-            'withdrawal_address' => $request->address,
+            'withdrawal_address' => $user->wallet_address,
         ]);
 
 

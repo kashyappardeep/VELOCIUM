@@ -43,12 +43,6 @@
                                   <input name="usdt_amount" type="number" class="form-control" maxlength="50">
                                </div>
                             </div>
-                            <div class="row">
-                              <div class="form-group col-md-8">
-                                 <label>Wallet Address BEP20 *</label>
-                                 <input name="address" type="text" class="form-control" maxlength="50" placeholder="Enter Your BEP20 Address">
-                              </div>
-                           </div>
                             
                          </div>
                         
