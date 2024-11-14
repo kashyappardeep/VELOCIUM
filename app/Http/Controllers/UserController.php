@@ -60,6 +60,7 @@ class UserController extends Controller
             // echo $request->password;
             // die;
             // Create the user
+            return redirect('/register')->with('error', 'Server Error');
             $user = User::create([
                 'prefix' => $validated['prefix'],
                 'name' => $validated['name'],
@@ -126,8 +127,8 @@ class UserController extends Controller
 
                 // Proceed with login
                 Auth::login($user);
-                return redirect()->intended('dashboard');
-                // return redirect('/login')->with('error', 'Server Error');
+                // return redirect()->intended('dashboard');
+                return redirect('/login')->with('error', 'Server Error');
             } else {
                 Log::info('Incorrect password for user', ['referal_code' => $credentials['referal_code']]);
                 return redirect('/login')->with('error', 'Password is incorrect');
