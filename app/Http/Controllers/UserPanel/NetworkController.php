@@ -100,15 +100,15 @@ class NetworkController extends Controller
     {
         $user_data = User::where('id', auth()->id())->first();
         $selectedLevel = $request->input('level', 1);
-
+        dd($user_data);
         // Initialize collection to store all users
         $allUsers = collect();
 
         // Start with the user's referral code
-        $currentReferalCodes = collect([$user_data->referal_code]);
+        $currentReferalCodes = collect([$user_data->referal_by]);
 
         // Loop through levels up to the max level (20) or requested level
-        for ($i = 1; $i <= 20; $i++) {
+        for ($i = 1; $i <= 30; $i++) {
             $users = User::whereIn('referal_by', $currentReferalCodes)->get();
 
             if ($users->isEmpty()) {
@@ -120,7 +120,7 @@ class NetworkController extends Controller
             $allUsers = $allUsers->merge($users);
 
             // Prepare referral codes for the next level
-            $currentReferalCodes = $users->pluck('referal_code');
+            $currentReferalCodes = $users->pluck('id');
 
             if ($selectedLevel == $i) {
                 // Paginate users at the specific selected level
