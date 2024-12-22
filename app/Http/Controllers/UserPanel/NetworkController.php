@@ -100,7 +100,7 @@ class NetworkController extends Controller
     {
         $user_data = User::where('id', auth()->id())->first();
         $selectedLevel = $request->input('level', 1);
-        dd($user_data);
+        //dd($user_data);
         // Initialize collection to store all users
         $allUsers = collect();
 
