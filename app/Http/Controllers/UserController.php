@@ -60,7 +60,7 @@ class UserController extends Controller
             // echo $request->password;
             // die;
             // Create the user
-            return redirect('/register')->with('error', 'Server Error');
+            //return redirect('/register')->with('error', 'Server Error');
             $user = User::create([
                 'prefix' => $validated['prefix'],
                 'name' => $validated['name'],
