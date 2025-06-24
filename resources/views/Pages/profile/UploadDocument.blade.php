@@ -67,13 +67,13 @@
 
 
     <!-- KYC Status and Wallet Address Update Section -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="offset-md-3 col-md-6">
             <h3 class="kycstatus fleft" style="font-weight: bold;">
-                KYC Status: <span><i class="fa fa-warning"></i> &nbsp;Pending</span>
+                KYC Status: <span><i class="fa fa-warning"></i></span>
             </h3>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="offset-md-3 col-md-6">
@@ -87,7 +87,7 @@
                         <input type="text" class="form-control" id="txtWalletAddress" style="text-transform: uppercase;">
                     </div>
                     <div class="text-right">
-                        <button class="btn btn-warning hvr-glow" onclick="openModal()">Enter Otp</button>
+                        <button class="btn btn-warning hvr-glow" onclick="openModal()">Send Otp</button>
                         <input type="button" class="btn btn-warning hvr-glow" value="Submit" id="btnSaveWalletAddress">
                     </div>
                 </div>
