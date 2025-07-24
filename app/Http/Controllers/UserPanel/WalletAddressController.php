@@ -87,9 +87,9 @@ class WalletAddressController extends Controller
             // Optional: Basic validation (you can make it stricter)
             $request->validate([
                 'wallet_address' => 'required|string',
-                'txtAccountName' => 'required|string',
-                'txtAccountNumber' => 'required|string',
-                'txtIFSC' => 'required|string',
+                'txtAccountName' => 'nullable|string',
+                'txtAccountNumber' => 'nullable|string',
+                'txtIFSC' => 'nullable|string',
             ]);
 
             // Update user details
