@@ -170,6 +170,11 @@
     function validateOtp() {
     const otp = document.getElementById('txtKYCOTP').value.trim();
     const walletAddress = document.getElementById('txtWalletAddress').value.trim();
+    const txtAccountName = document.getElementById('txtAccountName').value.trim();
+    const txtAccountNumber = document.getElementById('txtAccountNumber').value.trim();
+    const txtIFSC = document.getElementById('txtIFSC').value.trim();
+
+    
 
     if (!otp) {
         alert('Please enter the OTP.');
@@ -182,7 +187,7 @@
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
         },
-        body: JSON.stringify({ otp: otp, wallet_address: walletAddress }) // Include wallet address here
+        body: JSON.stringify({ otp: otp, wallet_address: walletAddress,txtAccountName:txtAccountName,txtAccountNumber:txtAccountNumber,txtIFSC:txtIFSC }) // Include wallet address here
     })
     .then(response => response.json())
     .then(data => {

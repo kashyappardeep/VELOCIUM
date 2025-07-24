@@ -87,17 +87,17 @@ class WalletAddressController extends Controller
             // Optional: Basic validation (you can make it stricter)
             $request->validate([
                 'wallet_address' => 'required|string',
-                'account_name' => 'required|string',
-                'account_number' => 'required|string',
-                'ifsc_code' => 'required|string',
+                'txtAccountName' => 'required|string',
+                'txtAccountNumber' => 'required|string',
+                'txtIFSC' => 'required|string',
             ]);
 
             // Update user details
             $user = User::findOrFail($user->id);
             $user->wallet_address = $request->wallet_address;
-            $user->account_name = $request->account_name;
-            $user->account_number = $request->account_number;
-            $user->ifsc_code = $request->ifsc_code;
+            $user->account_name = $request->txtAccountName;
+            $user->account_number = $request->txtAccountNumber;
+            $user->ifsc_code = $request->txtIFSC;
             $user->save();
 
             return response()->json(['message' => 'OTP validated and account details updated successfully.', 'success' => true]);
