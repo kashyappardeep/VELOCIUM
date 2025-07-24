@@ -133,7 +133,7 @@ class AdminController extends Controller
         {
             $users = User::all();
             
-            return view('admin.payout_list', compact('users'));
+            return view('Admin.payout_list', compact('users'));
         }
 
 
@@ -151,18 +151,7 @@ class AdminController extends Controller
         return redirect()->route('login');
     }
 
-    // public function updateUserStatus(Request $request)
-    // {
-    //     try {
-    //         $user = User::findOrFail($request->user_id);
-    //         $user->status = $request->status;
-    //         $user->save();
-
-    //         return response()->json(['success' => true, 'message' => 'User status updated successfully.']);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['success' => false, 'message' => 'Error updating user status.']);
-    //     }
-    // }
+   
    
 
 }

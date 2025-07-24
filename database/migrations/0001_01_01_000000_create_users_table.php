@@ -33,6 +33,10 @@ return new class extends Migration
             $table->integer('status')->default(0)->comment("0 => inactive, 1 => active");
             $table->string('password');
             $table->string('wallet_address')->nullable();
+            $table->string('account_name')->nullable();
+            $table->string('account_number')->nullable();
+            $table->string('ifsc_code')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

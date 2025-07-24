@@ -66,14 +66,7 @@
 </div>
 
 
-    <!-- KYC Status and Wallet Address Update Section -->
-    <!-- <div class="row">
-        <div class="offset-md-3 col-md-6">
-            <h3 class="kycstatus fleft" style="font-weight: bold;">
-                KYC Status: <span><i class="fa fa-warning"></i></span>
-            </h3>
-        </div>
-    </div> -->
+  
 
     <div class="row">
         <div class="offset-md-3 col-md-6">
@@ -82,10 +75,26 @@
                     <h5>Update USDT (BEP-20) Wallet Address <span id="WalletAddressStatus"></span></h5>
                 </div>
                 <div class="card-body form_design" id="divWalletAddress">
-                    <div class="form-group">
-                        <label>Wallet Address : *</label>
-                        <input type="text" class="form-control" id="txtWalletAddress" style="text-transform: uppercase;">
-                    </div>
+                    <!-- Existing Wallet Address field -->
+                            <div class="form-group">
+                                <label>Wallet Address : *</label>
+                                <input type="text" class="form-control" id="txtWalletAddress" style="text-transform: uppercase;">
+                            </div>
+
+                            <!-- 👇 Add these here -->
+                            <div class="form-group">
+                                <label>Account Holder Name : *</label>
+                                <input type="text" class="form-control" id="txtAccountName">
+                            </div>
+                            <div class="form-group">
+                                <label>Account Number : *</label>
+                                <input type="text" class="form-control" id="txtAccountNumber">
+                            </div>
+                            <div class="form-group">
+                                <label>IFSC Code : *</label>
+                                <input type="text" class="form-control" id="txtIFSC" style="text-transform: uppercase;">
+                            </div>
+
                     <div class="text-right">
                         <button class="btn btn-warning hvr-glow" onclick="openModal()">Send Otp</button>
                         <input type="button" class="btn btn-warning hvr-glow" value="Submit" id="btnSaveWalletAddress">

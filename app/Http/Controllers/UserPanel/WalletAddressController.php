@@ -67,29 +67,42 @@ class WalletAddressController extends Controller
     }
 
 
-    public function validateOtp(Request $request)
-    {
-        $user = auth()->user(); // Ensure the user is authenticated
-        if (!$user) {
-            return response()->json(['message' => 'User not authenticated.'], 401);
+   public function validateOtp(Request $request)
+        {
+            $user = auth()->user(); // Ensure the user is authenticated
+            if (!$user) {
+                return response()->json(['message' => 'User not authenticated.'], 401);
+            }
+
+            // Validate the OTP
+            $otp = Otp::where('user_id', $user->id)
+                ->where('otp', $request->otp)
+                ->where('expires_at', '>', Carbon::now())
+                ->first();
+
+            if (!$otp) {
+                return response()->json(['message' => 'Invalid or expired OTP.', 'success' => false], 400);
+            }
+
+            // Optional: Basic validation (you can make it stricter)
+            $request->validate([
+                'wallet_address' => 'required|string',
+                'account_name' => 'required|string',
+                'account_number' => 'required|string',
+                'ifsc_code' => 'required|string',
+            ]);
+
+            // Update user details
+            $user = User::findOrFail($user->id);
+            $user->wallet_address = $request->wallet_address;
+            $user->account_name = $request->account_name;
+            $user->account_number = $request->account_number;
+            $user->ifsc_code = $request->ifsc_code;
+            $user->save();
+
+            return response()->json(['message' => 'OTP validated and account details updated successfully.', 'success' => true]);
         }
 
-        // Validate the OTP
-        $otp = Otp::where('user_id', $user->id)
-            ->where('otp', $request->otp)
-            ->where('expires_at', '>', Carbon::now())
-            ->first();
-
-        if (!$otp) {
-            return response()->json(['message' => 'Invalid or expired OTP.', 'success' => false], 400);
-        }
-        $user = User::findOrFail($user->id);
-        $user->wallet_address = $request->wallet_address; // Update with the wallet address from the request
-        $user->save();
-
-
-        return response()->json(['message' => 'OTP validated and wallet address updated successfully.', 'success' => true]);
-    }
 
 
     public function create()

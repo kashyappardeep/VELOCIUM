@@ -18,18 +18,22 @@
                                                 <thead>
                                                     <tr role="row">
                                                         <th class="text-center" style="
-    width: 62px;
-">Name</th>
+                                                                    width: 62px;
+                                                                ">Name</th>
                                                         <th class="text-center" style="
-    width: 133px;
-">Date</th>
+                                                                    width: 133px;
+                                                                ">Date</th>
                                                         <th class="text-center" style="
-    width: 69px;
-">Amount</th>
+                                                                    width: 69px;
+                                                                ">Amount</th>
                                                         <th class="text-center" style="
-    width: 41px;
-">Status</th>
+                                                                    width: 41px;
+                                                                ">Status</th>
                                                         <th class="text-center">Address</th>
+                                                        <th class="text-center">Account Holder Name</th>
+                                                        <th class="text-center">Account Number</th>
+                                                        <th class="text-center">IFSC Code</th>
+
                                                         <th class="text-center">Action</th>
                                                     </tr>
                                                 </thead>
@@ -49,6 +53,10 @@
                                                             {{ $req->status == 0 ? 'Pending...' : 'Approved' }}
                                                         </td>
                                                         <td class="text-center">{{$req->withdrawal_address}}</td>
+                                                        <td class="text-center">{{ $req->user_req->account_name ?? 'N/A' }}</td>
+                                                        <td class="text-center">{{ $req->user_req->account_number ?? 'N/A' }}</td>
+                                                        <td class="text-center">{{ $req->user_req->ifsc_code ?? 'N/A' }}</td>
+
                                                         <td class="text-center" style="width: 276.604px;" aria-label="Status">
                                                             <form action="{{ route('accept_withdraw_req', $req->id) }}" method="POST" style="display: inline;">
                                                                 @csrf
