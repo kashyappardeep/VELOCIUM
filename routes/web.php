@@ -83,8 +83,12 @@ Route::namespace('App\Http\Controllers\Admin')->prefix('admin')->group(function 
         Route::get('/dummy_id', [ActiveUserIdController::class, 'dummy_id'])->name('dummy_id');
         Route::put('/active_dummy_id', [ActiveUserIdController::class, 'active_dummy_id'])->name('active_dummy_id');
         Route::get('/show_all_user', [AdminController::class, 'show_all_user'])->name('admin.show_all_user');
+       // Route::post('/update-user-status', [AdminController::class, 'updateUserStatus'])->name('update.user.status');
+
         // routes/web.php
+        Route::get('/payout-list', [AdminController::class, 'showPayoutList'])->name('admin.payoutList');
         Route::post('/payout-closing', [AdminController::class, 'payoutClosing'])->name('payout.closing');
+       
         Route::put('/withdraw/accept/{id}', [WithdrawalRequestController::class, 'acceptWithdrawRequest'])->name('accept_withdraw_req');
         Route::resource('invest_req', InvestmentRequestController::class);
         Route::resource('addfund', AddFundController::class);

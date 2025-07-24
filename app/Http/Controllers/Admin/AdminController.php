@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Log;
 use App\Models\User;
 use App\Models\TransactionHistory;
 use Carbon\Carbon;
+use App\Exports\PayoutExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -127,10 +129,18 @@ class AdminController extends Controller
         return redirect()->back()->with('success', 'Payouts have been closed, and balances reset.');
     }
 
+    public function showPayoutList()
+        {
+            $users = User::all();
+            
+            return view('admin.payout_list', compact('users'));
+        }
+
+
 
     public function show_all_user()
     {
-        $alluser = User::paginate(10);
+        $alluser = User::paginate(100);
         return view('Admin.alluser', compact('alluser'));
     }
     public function logout(Request $request)
@@ -140,4 +150,19 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('login');
     }
+
+    // public function updateUserStatus(Request $request)
+    // {
+    //     try {
+    //         $user = User::findOrFail($request->user_id);
+    //         $user->status = $request->status;
+    //         $user->save();
+
+    //         return response()->json(['success' => true, 'message' => 'User status updated successfully.']);
+    //     } catch (\Exception $e) {
+    //         return response()->json(['success' => false, 'message' => 'Error updating user status.']);
+    //     }
+    // }
+   
+
 }

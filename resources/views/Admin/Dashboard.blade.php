@@ -80,7 +80,7 @@
                                  <div class="col-12 col-md-12 taskrounbd">
                                     <div class="cashsales">
                                        <figure>{{ number_format($totalwithdralSum, 2) }}</figure>
-                                       <form action="{{ route('payout.closing') }}" method="POST" style="display: inline;">
+                                       <form action="{{ route('admin.payoutList') }}" method="GET" style="display: inline;">
                                           @csrf
                                           <button type="submit" class="btn btn-warning">Payout Closing</button>
                                       </form>
